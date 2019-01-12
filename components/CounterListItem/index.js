@@ -8,8 +8,21 @@ import { Spring, animated } from "react-spring/native";
 
 import styles from "./styles";
 import { increment, decrement } from "../../reducers/transitions";
+import Icon from "../Icon";
 
 const AnimatedView = animated(View);
+const AnimatedIcon = animated(Icon);
+
+const interpolateIconSize = x => {
+  return x
+    .interpolate({
+      map: Math.abs,
+      range: [10, 80],
+      output: [26, 40],
+      extrapolate: "clamp",
+    })
+    .interpolate(x => parseInt(x, 10));
+};
 
 const THRESHOLD = 80;
 
@@ -56,18 +69,24 @@ class CounterListItem extends Component {
         <View style={{ ...styles.container, backgroundColor: deltaX > 0 ? "#FF1C68" : "#14D790" }}>
           <Spring native to={{ x: down ? deltaX : 0 }} immediate={name => down && name === "x"}>
             {({ x }) => (
-              <AnimatedView
-                style={{
-                  transform: [{ translateX: x.interpolate(x => x) }],
-                }}
-              >
-                <ImageBackground source={{ uri: background }} style={styles.background} />
-                <View style={styles.backgroundMask} />
-                <View style={styles.content}>
-                  <Text style={styles.nameText}>{name}</Text>
-                  <Text style={styles.counterText}>{count}</Text>
+              <React.Fragment>
+                <View style={styles.iconContainer}>
+                  <AnimatedIcon name="remove" size={interpolateIconSize(x)} color="white" />
+                  <AnimatedIcon name="add" size={interpolateIconSize(x)} color="white" />
                 </View>
-              </AnimatedView>
+                <AnimatedView
+                  style={{
+                    transform: [{ translateX: x.interpolate(x => x) }],
+                  }}
+                >
+                  <ImageBackground source={{ uri: background }} style={styles.background} />
+                  <View style={styles.backgroundMask} />
+                  <View style={styles.content}>
+                    <Text style={styles.nameText}>{name}</Text>
+                    <Text style={styles.counterText}>{count}</Text>
+                  </View>
+                </AnimatedView>
+              </React.Fragment>
             )}
           </Spring>
         </View>

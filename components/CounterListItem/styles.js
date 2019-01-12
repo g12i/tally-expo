@@ -37,6 +37,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
   },
+  iconContainer: {
+    display: "flex",
+    width: "100%",
+    position: "absolute",
+    flexDirection: "row",
+    height: 80,
+    alignItems: "center",
+    paddingLeft: 16,
+    paddingRight: 16,
+    justifyContent: "space-between",
+  },
 });
 
 export default styles;
