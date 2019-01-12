@@ -3979,10 +3979,6 @@ react-transform-hmr@^1.0.4:
     global "^4.3.0"
     react-proxy "^1.1.7"
 
-react-with-gesture@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/react-with-gesture/-/react-with-gesture-4.0.1.tgz#e7a0d4026fb5bb60e149443c92f32ba556548638"
-
 react@16.5.0:
   version "16.5.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.5.0.tgz#f2c1e754bf9751a549d9c6d9aca41905beb56575"
