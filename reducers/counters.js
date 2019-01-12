@@ -1,15 +1,15 @@
-import uuid from 'uuid/v4';
+import uuid from "uuid/v4";
 
-export const RESET_DAILY = 'counters/reset/DAILY';
-export const RESET_WEEKLY = 'counters/reset/WEEKLY';
-export const RESET_MONTHLY = 'counters/reset/MONTHLY';
-export const RESET_YEARLY = 'counters/reset/YEARLY';
-export const RESET_NEVER = 'counters/reset/NEVER';
+export const RESET_DAILY = "counters/reset/DAILY";
+export const RESET_WEEKLY = "counters/reset/WEEKLY";
+export const RESET_MONTHLY = "counters/reset/MONTHLY";
+export const RESET_YEARLY = "counters/reset/YEARLY";
+export const RESET_NEVER = "counters/reset/NEVER";
 
-export const ADD_COUNTER = 'counters/ADD_COUNTER';
-export const REMOVE_COUNTER = 'counters/REMOVE_COUNTER';
+export const ADD_COUNTER = "counters/ADD_COUNTER";
+export const REMOVE_COUNTER = "counters/REMOVE_COUNTER";
 
-export const addCounter = ({ name, background = '', reset = RESET_DAILY }) => ({
+export const addCounter = ({ name, background = "", reset = RESET_DAILY }) => ({
   type: ADD_COUNTER,
   payload: { id: uuid(), name, background, reset },
 });
@@ -22,12 +22,17 @@ export const removeCounter = id => ({
 // const initialState = [];
 const initialState = [
   {
-    id: '1',
-    name: 'Exercise',
+    id: "1",
+    name: "Exercise",
     background:
-      'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
+      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
   },
-  { id: '2', name: 'world' },
+  {
+    id: "2",
+    name: "world",
+    background:
+      "https://images.unsplash.com/photo-1527515545081-5db817172677?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQ5NzQ2fQ",
+  },
 ];
 
 export default function(state = initialState, action) {
