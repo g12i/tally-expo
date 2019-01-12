@@ -29,7 +29,7 @@ const initialState = [
   },
   {
     id: "2",
-    name: "world",
+    name: "Stop sweets",
     background:
       "https://images.unsplash.com/photo-1527515545081-5db817172677?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQ5NzQ2fQ",
   },

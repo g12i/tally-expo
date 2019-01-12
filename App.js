@@ -6,6 +6,8 @@ import rootReducer from "./reducers";
 
 import CounterList from "./components/CounterList";
 import StatusBar from "./components/StatusBar";
+import Header from "./components/Header";
+import TextButton from "./components/TextButton";
 
 const store = createStore(rootReducer);
 
@@ -15,6 +17,11 @@ export default class App extends Component {
       <Provider store={store}>
         <StatusBar backgroundColor="#222831" barStyle="light-content" />
         <View style={styles.container}>
+          <Header
+            leftButton={<TextButton title="Edit" />}
+            title="Counters"
+            rightButton={<TextButton icon="add" />}
+          />
           <CounterList />
         </View>
       </Provider>
