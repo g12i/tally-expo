@@ -1,25 +1,41 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, Dimensions } from "react-native";
+import { View, Dimensions, Text } from "react-native";
 import { Spring, animated } from "react-spring/native";
 import styles from "./styles";
 
 const AnimatedView = animated(View);
+const AnimatedText = animated(Text);
 
 export const Position = {
   Bottom: "Bottom",
   Right: "Right",
 };
 
-class Drawer extends PureComponent {
-  windowDimensions = Dimensions.get("window");
+class Drawer extends Component {
+  windowWidth = Dimensions.get("window").width;
+  windowHeight = Dimensions.get("window").height;
+
+  isHorizontalPosition = () => {
+    return this.props.position === Position.Bottom;
+  };
+
+  getTargetDimension = () => {
+    return this.isHorizontalPosition() ? this.windowHeight : this.windowWidth;
+  };
+
+  getTranslationAxis = () => {
+    return this.isHorizontalPosition() ? "translateY" : "translateX";
+  };
+
   render() {
-    const { children, position, visible } = this.props;
+    const { children, visible } = this.props;
+
     return (
       <Spring
         native
         to={{
-          x: visible ? 0 : this.windowDimensions[position === Position.Bottom ? "height" : "width"],
+          x: visible ? 0 : this.getTargetDimension(),
         }}
         config={{ tension: 220, friction: 30 }}
       >
@@ -29,14 +45,12 @@ class Drawer extends PureComponent {
               ...styles.container,
               transform: [
                 {
-                  [position === Position.Bottom ? "translateY" : "translateX"]: x.interpolate(
-                    x => x
-                  ),
+                  [this.getTranslationAxis()]: x,
                 },
               ],
             }}
           >
-            {children}
+            {x.interpolate(x => x > 0).getValue() && children}
           </AnimatedView>
         )}
       </Spring>
