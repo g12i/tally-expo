@@ -4,7 +4,6 @@ import { TEXT_COLOR, TEXT_PLACEHOLDER_COLOR, FORM_BACKGROUND_COLOR } from "../..
 const styles = StyleSheet.create({
   container: {
     height: 48,
-    backgroundColor: FORM_BACKGROUND_COLOR,
     alignItems: "flex-start",
     paddingHorizontal: 16,
   },
