@@ -22,11 +22,17 @@ class CreateNew extends PureComponent {
   state = {
     name: "",
     reset: RESET_NEVER,
+    backgroundSync: false,
   };
-  saveAndHide = () => {
+  saveAndHide = async () => {
+    this.setState({ backgroundSync: true });
+    const backgroundUrl = await fetch("https://source.unsplash.com/random").then(
+      response => response.url
+    );
+    this.setState({ backgroundSync: false });
     this.props.addCounter({
       name: this.state.name,
-      background: "",
+      background: backgroundUrl,
       reset: this.state.reset,
     });
     this.props.hide();
@@ -47,7 +53,7 @@ class CreateNew extends PureComponent {
             <TextButton
               title="Save"
               onPress={this.saveAndHide}
-              disabled={this.state.name.length === 0}
+              disabled={this.state.name.length === 0 || this.state.backgroundSync}
             />
           }
           title="Create new"
