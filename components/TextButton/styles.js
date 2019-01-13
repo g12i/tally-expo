@@ -1,9 +1,12 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  button: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
   text: {
     textAlign: "center",
-    padding: 8,
     color: "#FD7014",
     fontSize: 16,
     fontWeight: "400",
