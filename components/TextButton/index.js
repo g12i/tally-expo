@@ -7,15 +7,7 @@ const Touchable = Platform.OS === "android" ? TouchableNativeFeedback : Touchabl
 
 class TextButton extends Component {
   render() {
-    const {
-      accessibilityLabel,
-      onPress,
-      title,
-      hasTVPreferredFocus,
-      icon,
-      disabled,
-      testID,
-    } = this.props;
+    const { accessibilityLabel, onPress, title, icon, disabled } = this.props;
     const buttonStyles = [styles.button];
     const textStyles = [styles.text];
     const accessibilityStates = [];
@@ -30,8 +22,6 @@ class TextButton extends Component {
         accessibilityLabel={accessibilityLabel}
         accessibilityRole="button"
         accessibilityStates={accessibilityStates}
-        hasTVPreferredFocus={hasTVPreferredFocus}
-        testID={testID}
         disabled={disabled}
         onPress={onPress}
       >
