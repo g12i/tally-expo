@@ -17,11 +17,11 @@ const styles = StyleSheet.create({
   },
   leftButton: {
     position: "absolute",
-    left: 8,
+    left: 0,
   },
   rightButton: {
     position: "absolute",
-    right: 8,
+    right: 0,
   },
 });
 
