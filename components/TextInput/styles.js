@@ -8,9 +8,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   input: {
-    height: 45,
+    height: 48,
+    fontSize: 16,
+    fontWeight: "400",
     width: "100%",
-    fontSize: 14,
     color: TEXT_COLOR,
   },
   placeholder: {

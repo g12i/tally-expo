@@ -3,6 +3,8 @@ import { Platform, Text, TouchableNativeFeedback, TouchableOpacity, View } from 
 import styles from "./styles";
 import Icon from "../Icon";
 
+const Touchable = Platform.OS === "android" ? TouchableNativeFeedback : TouchableOpacity;
+
 class TextButton extends Component {
   render() {
     const {
@@ -23,7 +25,6 @@ class TextButton extends Component {
       accessibilityStates.push("disabled");
     }
     const formattedTitle = Platform.OS === "android" ? title.toUpperCase() : title;
-    const Touchable = Platform.OS === "android" ? TouchableNativeFeedback : TouchableOpacity;
     return (
       <Touchable
         accessibilityLabel={accessibilityLabel}
