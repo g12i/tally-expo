@@ -3,7 +3,7 @@ import { Platform, Text, TouchableNativeFeedback, TouchableOpacity, View } from 
 import styles from "./styles";
 import Icon from "../Icon";
 
-class Button extends Component {
+class TextButton extends Component {
   render() {
     const {
       accessibilityLabel,
@@ -35,7 +35,7 @@ class Button extends Component {
         onPress={onPress}
       >
         <View style={buttonStyles}>
-          {icon && <Icon name={icon} color={styles.text.color} size={26} />}
+          {icon && <Icon name={icon} color={styles.text.color} size={34} />}
           {title && (
             <Text style={textStyles} disabled={disabled}>
               {formattedTitle}
@@ -47,4 +47,4 @@ class Button extends Component {
   }
 }
 
-export default Button;
+export default TextButton;

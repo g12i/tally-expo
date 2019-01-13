@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    fontWeight: "600",
     width: "100%",
     height: 45,
     alignItems: "center",
@@ -12,7 +11,8 @@ const styles = StyleSheet.create({
     borderBottomColor: "#393E46",
   },
   heading: {
-    fontSize: 20,
+    fontSize: 18,
+    fontWeight: "600",
     color: "#fff",
   },
   leftButton: {

@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
     color: "#FD7014",
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "400",
   },
   textDisabled: {
