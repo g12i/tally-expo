@@ -9,10 +9,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  iconWithText: {
-    marginRight: 4,
-    marginTop: 3,
-  },
+  // iconWithText: {
+  //   marginRight: 4,
+  //   marginTop: 3,
+  // },
   text: {
     textAlign: "center",
     color: BRAND_PRIMARY,

@@ -26,7 +26,7 @@ class Select extends PureComponent {
     return options.find(({ value: itemValue }) => itemValue === value);
   };
   render() {
-    const { label, onChange, options = [], value } = this.props;
+    const { label, options = [], value } = this.props;
     const selectedOption = this.getSelectedOption();
     return (
       <React.Fragment>
@@ -53,7 +53,7 @@ class Select extends PureComponent {
                 key={`option-${itemValue}`}
               >
                 <Text style={styles.optionText}>{label}</Text>
-                {value === itemValue && <Icon name="checkmark" color={BRAND_PRIMARY} size={20} />}
+                {value === itemValue && <Icon name="checkmark" color={BRAND_PRIMARY} size={32} />}
               </Touchable>
             ))}
           </FieldGroup>

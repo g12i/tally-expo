@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
   },
   option: {
     height: 48,
-    fontSize: 16,
     paddingHorizontal: 16,
     fontWeight: "400",
     flexDirection: "row",
@@ -30,6 +29,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   optionText: {
+    fontSize: 16,
     color: TEXT_COLOR,
   },
 });
