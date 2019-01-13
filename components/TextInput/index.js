@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { View, Text, TextInput as NativeTextInput } from "react-native";
+import { View, TextInput as NativeTextInput } from "react-native";
 import styles from "./styles";
 
 class TextInput extends PureComponent {
