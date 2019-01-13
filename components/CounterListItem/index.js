@@ -76,11 +76,7 @@ class CounterListItem extends Component {
                   <AnimatedIcon name="remove" size={interpolateIconSize(x)} color="white" />
                   <AnimatedIcon name="add" size={interpolateIconSize(x)} color="white" />
                 </View>
-                <AnimatedView
-                  style={{
-                    transform: [{ translateX: x.interpolate(x => x) }],
-                  }}
-                >
+                <AnimatedView style={{ transform: [{ translateX: x }] }}>
                   <ImageBackground source={{ uri: background }} style={styles.background} />
                   <View style={styles.backgroundMask} />
                   <View style={styles.content}>
