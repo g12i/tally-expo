@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { TEXT_COLOR } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,11 +20,11 @@ const styles = StyleSheet.create({
   },
   nameText: {
     fontSize: 20,
-    color: "#fff",
+    color: TEXT_COLOR,
   },
   counterText: {
     fontSize: 40,
-    color: "#fff",
+    color: TEXT_COLOR,
   },
   content: {
     paddingLeft: 16,

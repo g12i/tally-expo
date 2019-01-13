@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { BORDER_COLOR, TEXT_COLOR } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {
@@ -8,12 +9,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#393E46",
+    borderBottomColor: BORDER_COLOR,
   },
   heading: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#fff",
+    color: TEXT_COLOR,
   },
   leftButton: {
     position: "absolute",

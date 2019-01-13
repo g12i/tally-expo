@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { BRAND_PRIMARY, TEXT_DISABLED_COLOR } from "../../theme";
 
 const styles = StyleSheet.create({
   button: {
@@ -14,12 +15,12 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: "center",
-    color: "#FD7014",
+    color: BRAND_PRIMARY,
     fontSize: 18,
     fontWeight: "400",
   },
   textDisabled: {
-    color: "#4B5057",
+    color: TEXT_DISABLED_COLOR,
   },
 });
 

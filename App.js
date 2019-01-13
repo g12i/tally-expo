@@ -11,6 +11,7 @@ import Drawer, { Position } from "./components/Drawer";
 import Header from "./components/Header";
 import StatusBar from "./components/StatusBar";
 import TextButton from "./components/TextButton";
+import { BACKGROUND_COLOR } from "./theme";
 
 const store = createStore(rootReducer);
 
@@ -27,7 +28,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <StatusBar backgroundColor="#222831" barStyle="light-content" />
+        <StatusBar backgroundColor={BACKGROUND_COLOR} barStyle="light-content" />
         <View style={styles.container}>
           <Header
             leftButton={<TextButton title="Edit" />}
@@ -47,6 +48,6 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#222831",
+    backgroundColor: BACKGROUND_COLOR,
   },
 });

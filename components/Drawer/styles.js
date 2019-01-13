@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { BACKGROUND_COLOR } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {
@@ -7,7 +8,7 @@ const styles = StyleSheet.create({
     top: 20,
     width: "100%",
     height: "100%",
-    backgroundColor: "#222831",
+    backgroundColor: BACKGROUND_COLOR,
   },
 });
 
