@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, Dimensions, Text } from "react-native";
+import { View, Dimensions, Modal } from "react-native";
 import { Spring, animated } from "react-spring/native";
 import styles from "./styles";
 
 const AnimatedView = animated(View);
-const AnimatedText = animated(Text);
+const AnimatedModal = animated(Modal);
 
 export const Position = {
   Bottom: "Bottom",
@@ -36,22 +36,25 @@ class Drawer extends Component {
         native
         to={{
           x: visible ? 0 : this.getTargetDimension(),
+          visibility: visible ? 1 : 0,
         }}
         config={{ tension: 220, friction: 30 }}
       >
-        {({ x }) => (
-          <AnimatedView
-            style={{
-              ...styles.container,
-              transform: [
-                {
-                  [this.getTranslationAxis()]: x,
-                },
-              ],
-            }}
-          >
-            {x.interpolate(x => x > 0).getValue() && children}
-          </AnimatedView>
+        {({ x, visibility }) => (
+          <AnimatedModal visible={visibility.interpolate(x => !!x)} transparent>
+            <AnimatedView
+              style={{
+                ...styles.container,
+                transform: [
+                  {
+                    [this.getTranslationAxis()]: x,
+                  },
+                ],
+              }}
+            >
+              {x.interpolate(x => x > 0).getValue() && children}
+            </AnimatedView>
+          </AnimatedModal>
         )}
       </Spring>
     );
