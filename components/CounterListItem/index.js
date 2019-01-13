@@ -69,7 +69,11 @@ class CounterListItem extends Component {
         onHandlerStateChange={this.onHandlerStateChange}
       >
         <View style={{ ...styles.container, backgroundColor: deltaX > 0 ? "#FF1C68" : "#14D790" }}>
-          <Spring native to={{ x: down ? deltaX : 0 }} immediate={name => down && name === "x"}>
+          <Spring
+            native
+            to={{ x: down ? deltaX : 0 }}
+            immediate={propName => down && propName === "x"}
+          >
             {({ x }) => (
               <React.Fragment>
                 <View style={styles.iconContainer}>
