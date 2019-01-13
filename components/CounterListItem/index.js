@@ -3,13 +3,15 @@ import { View, Text, ImageBackground } from "react-native";
 import PropTypes from "prop-types";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { PanGestureHandler, State } from "react-native-gesture-handler";
+import { GestureHandler } from "expo";
+
 import { Spring, animated } from "react-spring/native";
 
 import styles from "./styles";
 import { increment, decrement } from "../../reducers/transitions";
 import Icon from "../Icon";
 
+const { State, PanGestureHandler } = GestureHandler;
 const AnimatedView = animated(View);
 const AnimatedIcon = animated(Icon);
 
