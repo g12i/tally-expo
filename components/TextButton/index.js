@@ -35,7 +35,14 @@ class TextButton extends Component {
         onPress={onPress}
       >
         <View style={buttonStyles}>
-          {icon && <Icon name={icon} color={styles.text.color} size={34} />}
+          {icon && (
+            <Icon
+              name={icon}
+              color={styles.text.color}
+              size={34}
+              style={icon && title ? styles.iconWithText : {}}
+            />
+          )}
           {title && (
             <Text style={textStyles} disabled={disabled}>
               {formattedTitle}

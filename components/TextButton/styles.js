@@ -4,6 +4,13 @@ const styles = StyleSheet.create({
   button: {
     paddingVertical: 8,
     paddingHorizontal: 16,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  iconWithText: {
+    marginRight: 4,
+    marginTop: 3,
   },
   text: {
     textAlign: "center",
