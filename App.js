@@ -1,53 +1,51 @@
 import React, { Component } from "react";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import { StyleSheet, View } from "react-native";
+import { createStackNavigator, createAppContainer } from "react-navigation";
+import { BACKGROUND_COLOR, TEXT_COLOR } from "./theme";
+
 import rootReducer from "./reducers";
 
-import CreateNew from "./view/CreateNew";
-
-import CounterList from "./components/CounterList";
-import Drawer, { Position } from "./components/Drawer";
-import Header from "./components/Header";
 import StatusBar from "./components/StatusBar";
-import TextButton from "./components/TextButton";
-import { BACKGROUND_COLOR } from "./theme";
+
+import HomeScreen from "./screens/HomePage";
+import CreateNew from "./screens/CreateNew";
 
 const store = createStore(rootReducer);
 
+const RootStack = createStackNavigator(
+  {
+    Home: {
+      screen: HomeScreen,
+    },
+    CreateNew: {
+      screen: CreateNew,
+    },
+  },
+  {
+    mode: "modal",
+    initialRouteName: "Home",
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: BACKGROUND_COLOR,
+      },
+      headerTintColor: TEXT_COLOR,
+      headerTitleStyle: {
+        fontWeight: "600",
+      },
+    },
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
+
 export default class App extends Component {
-  state = {
-    displayCreateNewForm: false,
-  };
-  showCreateForm = () => {
-    this.setState({ displayCreateNewForm: true });
-  };
-  hideCreateForm = () => {
-    this.setState({ displayCreateNewForm: false });
-  };
   render() {
     return (
       <Provider store={store}>
         <StatusBar backgroundColor={BACKGROUND_COLOR} barStyle="light-content" />
-        <View style={styles.container}>
-          <Header
-            leftButton={<TextButton title="Edit" />}
-            title="Counters"
-            rightButton={<TextButton icon="add" onPress={this.showCreateForm} />}
-          />
-          <CounterList />
-        </View>
-        <Drawer visible={this.state.displayCreateNewForm} position={Position.Bottom}>
-          <CreateNew hide={this.hideCreateForm} />
-        </Drawer>
+        <AppContainer />
       </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: BACKGROUND_COLOR,
-  },
-});
