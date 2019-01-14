@@ -1,20 +1,24 @@
 import React, { PureComponent } from "react";
-import { View } from "react-native";
+import { FlatList, Text } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { removeCounter } from "../../reducers/counters";
 import CounterListItem from "../CounterListItem";
+import { BACKGROUND_COLOR } from "../../theme";
 
 class CounterList extends PureComponent {
+  _keyExtractor = item => item.id;
+
   render() {
     const { counters } = this.props;
     return (
-      <View>
-        {counters.map(counter => (
-          <CounterListItem key={counter.id} {...counter} />
-        ))}
-      </View>
+      <FlatList
+        data={counters}
+        keyExtractor={this._keyExtractor}
+        renderItem={({ item }) => <CounterListItem {...item} />}
+        style={{ backgroundColor: BACKGROUND_COLOR }}
+      />
     );
   }
 }

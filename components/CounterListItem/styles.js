@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%",
-    backgroundColor: "rgba(0,0,0,.5)",
+    backgroundColor: "rgba(0,0,0,.4)",
   },
   nameText: {
     fontSize: 20,
@@ -39,15 +39,12 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   iconContainer: {
-    display: "flex",
-    width: "100%",
     position: "absolute",
-    flexDirection: "row",
+    display: "flex",
     height: 80,
+    width: 80,
     alignItems: "center",
-    paddingLeft: 16,
-    paddingRight: 16,
-    justifyContent: "space-between",
+    justifyContent: "center",
   },
 });
 

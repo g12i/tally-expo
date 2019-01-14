@@ -33,7 +33,8 @@ class CounterListItem extends Component {
     down: false,
     deltaX: 0,
   };
-  onPanGestureEvent = ({ nativeEvent }) => {
+
+  _onPanGestureEvent = ({ nativeEvent }) => {
     const deltaX = nativeEvent.translationX;
     const cappedDeltaX = Math.min(THRESHOLD, Math.abs(deltaX)) * (deltaX < 0 ? -1 : 1);
     this.setState({
@@ -41,7 +42,7 @@ class CounterListItem extends Component {
     });
   };
 
-  onHandlerStateChange = ({ nativeEvent }) => {
+  _onHandlerStateChange = ({ nativeEvent }) => {
     const eventState = nativeEvent.state;
     this.setState(state => {
       if (eventState === State.END) {
@@ -60,15 +61,36 @@ class CounterListItem extends Component {
     });
   };
 
+  renderAction = ({ icon, backgroundColor, left = "auto", right = "auto" }) => x => {
+    return (
+      <View style={{ ...styles.iconContainer, left, right, backgroundColor }}>
+        <AnimatedIcon name={icon} size={interpolateIconSize(x)} color="white" />
+      </View>
+    );
+  };
+
+  renderLeftAction = this.renderAction({
+    icon: "remove",
+    backgroundColor: "#FF1C68",
+    left: 0,
+  });
+
+  renderRightAction = this.renderAction({
+    icon: "add",
+    backgroundColor: "#14D790",
+    right: 0,
+  });
+
   render() {
     const { background, count, name } = this.props;
     const { deltaX, down } = this.state;
     return (
       <PanGestureHandler
-        onGestureEvent={this.onPanGestureEvent}
-        onHandlerStateChange={this.onHandlerStateChange}
+        minDeltaX={10}
+        onGestureEvent={this._onPanGestureEvent}
+        onHandlerStateChange={this._onHandlerStateChange}
       >
-        <View style={{ ...styles.container, backgroundColor: deltaX > 0 ? "#FF1C68" : "#14D790" }}>
+        <View style={styles.container}>
           <Spring
             native
             to={{ x: down ? deltaX : 0 }}
@@ -76,10 +98,8 @@ class CounterListItem extends Component {
           >
             {({ x }) => (
               <React.Fragment>
-                <View style={styles.iconContainer}>
-                  <AnimatedIcon name="remove" size={interpolateIconSize(x)} color="white" />
-                  <AnimatedIcon name="add" size={interpolateIconSize(x)} color="white" />
-                </View>
+                {this.renderLeftAction(x)}
+                {this.renderRightAction(x)}
                 <AnimatedView style={{ transform: [{ translateX: x }] }}>
                   <ImageBackground source={{ uri: background }} style={styles.background} />
                   <View style={styles.backgroundMask} />
