@@ -1,12 +1,6 @@
 import React, { PureComponent } from "react";
-import { Text, View } from "react-native";
-import { GestureHandler } from "expo";
-import { BRAND_PRIMARY, BACKGROUND_COLOR } from "../../theme";
-import styles from "./styles";
-
-import TextButton from "../../components/TextButton";
-import FieldGroup from "../../components/FieldGroup";
-import Icon from "../../components/Icon";
+import { View } from "react-native";
+import { BACKGROUND_COLOR } from "../../theme";
 
 import {
   RESET_NEVER,
@@ -16,7 +10,8 @@ import {
   RESET_YEARLY,
 } from "../../reducers/counters";
 
-const { RectButton } = GestureHandler;
+import TextButton from "../../components/TextButton";
+import OptionList from "../../components/OptionList";
 
 class ChooseResetFrequency extends PureComponent {
   static navigationOptions = ({ navigation }) => {
@@ -34,24 +29,20 @@ class ChooseResetFrequency extends PureComponent {
     { label: "Yearly", value: RESET_YEARLY },
   ];
 
-  onChange = value => () => {};
+  _onChange = value => {
+    console.log(value);
+  };
 
   render() {
     const value = null;
     return (
       <View style={{ flex: 1, backgroundColor: BACKGROUND_COLOR }}>
-        <FieldGroup>
-          {this.options.map(({ value: itemValue, label }) => (
-            <RectButton
-              style={styles.potion}
-              onPress={this.onChange(itemValue)}
-              key={`option-${itemValue}`}
-            >
-              <Text style={styles.optionText}>{label}</Text>
-              {value === itemValue && <Icon name="checkmark" color={BRAND_PRIMARY} size={32} />}
-            </RectButton>
-          ))}
-        </FieldGroup>
+        <OptionList
+          options={this.options}
+          value={RESET_MONTHLY}
+          onChange={this._onChange}
+          marginTop={2}
+        />
       </View>
     );
   }
