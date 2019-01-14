@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Platform, Text, TouchableNativeFeedback, TouchableOpacity, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 import styles from "./styles";
-import Icon from "../Icon";
 
-const Touchable = Platform.OS === "android" ? TouchableNativeFeedback : TouchableOpacity;
+import Touchable from "../Touchable";
+import Icon from "../Icon";
 
 class TextButton extends Component {
   render() {

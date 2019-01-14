@@ -1,11 +1,9 @@
 import React, { PureComponent } from "react";
 import { Text } from "react-native";
-import { GestureHandler } from "expo";
 import styles from "./styles";
 
 import Icon from "../Icon";
-
-const { RectButton } = GestureHandler;
+import Touchable from "../Touchable";
 
 class Select extends PureComponent {
   onChange = value => () => {
@@ -19,7 +17,7 @@ class Select extends PureComponent {
     const { label, onPressLabel } = this.props;
     const selectedOption = this.getSelectedOption();
     return (
-      <RectButton style={styles.container} onPress={onPressLabel}>
+      <Touchable style={styles.container} onPress={onPressLabel}>
         <React.Fragment>
           <Text style={styles.label}>{label}</Text>
           <Text style={styles.value}>
@@ -27,7 +25,7 @@ class Select extends PureComponent {
             <Icon name="arrow-forward" size={14} />
           </Text>
         </React.Fragment>
-      </RectButton>
+      </Touchable>
     );
   }
 }
