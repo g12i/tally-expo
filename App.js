@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import { BACKGROUND_COLOR, TEXT_COLOR } from "./theme";
+import { BACKGROUND_COLOR, TEXT_COLOR, BORDER_COLOR } from "./theme";
 
 import rootReducer from "./reducers";
 
@@ -31,6 +31,7 @@ const CreateNewStack = createStackNavigator(
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: BACKGROUND_COLOR,
+        borderBottomColor: BORDER_COLOR,
       },
       headerTintColor: TEXT_COLOR,
       headerTitleStyle: {
@@ -50,6 +51,7 @@ const MainStack = createStackNavigator(
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: BACKGROUND_COLOR,
+        borderBottomColor: BORDER_COLOR,
       },
       headerTintColor: TEXT_COLOR,
       headerTitleStyle: {
