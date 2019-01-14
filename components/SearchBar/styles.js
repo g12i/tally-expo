@@ -32,8 +32,9 @@ const styles = StyleSheet.create({
     color: TEXT_PLACEHOLDER_COLOR,
   },
   clearIconTouchable: {
+    backgroundColor: "transparent",
     height: "100%",
-    width: 32,
+    width: 36,
     alignItems: "center",
     justifyContent: "center",
   },

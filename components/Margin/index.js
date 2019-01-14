@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 
-function Margin({ children, top = 0, right = 0, bottom = 0, left = 0 }) {
+function Margin({ children, top = 0, right = 0, bottom = 0, left = 0, style, ...props }) {
   return (
     <View
       style={{
@@ -9,7 +9,9 @@ function Margin({ children, top = 0, right = 0, bottom = 0, left = 0 }) {
         marginRight: 16 * right,
         marginBottom: 16 * bottom,
         marinLeft: 16 * left,
+        ...style,
       }}
+      {...props}
     >
       {children}
     </View>
