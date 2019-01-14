@@ -10,21 +10,24 @@ import StatusBar from "./components/StatusBar";
 
 import HomeScreen from "./screens/HomePage";
 import CreateNew from "./screens/CreateNew";
+import ChooseBackground from "./screens/ChooseBackground";
+import ChooseResetFrequency from "./screens/ChooseResetFrequency";
 
 const store = createStore(rootReducer);
 
-const RootStack = createStackNavigator(
+const CreateNewStack = createStackNavigator(
   {
-    Home: {
-      screen: HomeScreen,
-    },
-    CreateNew: {
+    CreateNewHome: {
       screen: CreateNew,
+    },
+    ChooseResetFrequency: {
+      screen: ChooseResetFrequency,
+    },
+    ChooseBackground: {
+      screen: ChooseBackground,
     },
   },
   {
-    mode: "modal",
-    initialRouteName: "Home",
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: BACKGROUND_COLOR,
@@ -34,6 +37,40 @@ const RootStack = createStackNavigator(
         fontWeight: "600",
       },
     },
+  }
+);
+
+const MainStack = createStackNavigator(
+  {
+    Home: {
+      screen: HomeScreen,
+    },
+  },
+  {
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: BACKGROUND_COLOR,
+      },
+      headerTintColor: TEXT_COLOR,
+      headerTitleStyle: {
+        fontWeight: "600",
+      },
+    },
+  }
+);
+
+const RootStack = createStackNavigator(
+  {
+    Main: {
+      screen: MainStack,
+    },
+    CreateNew: {
+      screen: CreateNewStack,
+    },
+  },
+  {
+    mode: "modal",
+    headerMode: "none",
   }
 );
 

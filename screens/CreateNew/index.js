@@ -21,15 +21,9 @@ class CreateNew extends PureComponent {
   static navigationOptions = ({ navigation }) => {
     return {
       headerTitle: "Add new",
-      headerRight: (
-        <Button
-          onPress={() => navigation.navigate("CreateNew")}
-          title="Save"
-          color={BRAND_PRIMARY}
-        />
-      ),
+      headerRight: <Button onPress={() => {}} title="Save" color={BRAND_PRIMARY} />,
       headerLeft: (
-        <Button onPress={() => navigation.goBack()} title="Cancel" color={BRAND_PRIMARY} />
+        <Button onPress={() => navigation.navigate("Main")} title="Cancel" color={BRAND_PRIMARY} />
       ),
     };
   };
@@ -37,6 +31,12 @@ class CreateNew extends PureComponent {
     name: "",
     reset: RESET_NEVER,
     backgroundSync: false,
+  };
+  navigateToResetFrequency = () => {
+    this.props.navigation.navigate("ChooseResetFrequency");
+  };
+  navigateToBackgroundChoice = () => {
+    this.props.navigation.navigate("ChooseBackground");
   };
   saveAndHide = async () => {
     this.setState({ backgroundSync: true });
@@ -68,6 +68,7 @@ class CreateNew extends PureComponent {
           <Select
             label="Reset"
             value={this.state.reset}
+            onPressLabel={this.navigateToResetFrequency}
             onChange={reset => this.setState({ reset })}
             options={[
               { label: "Never", value: RESET_NEVER },
@@ -77,6 +78,7 @@ class CreateNew extends PureComponent {
               { label: "Yearly", value: RESET_YEARLY },
             ]}
           />
+          <Select label="Background" onPressLabel={this.navigateToBackgroundChoice} />
         </FieldGroup>
       </View>
     );
