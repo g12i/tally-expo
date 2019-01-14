@@ -15,16 +15,22 @@ import {
 import FieldGroup from "../../components/FieldGroup";
 import Select from "../../components/Select";
 import TextInput from "../../components/TextInput";
-import { TEXT_COLOR } from "../../theme";
+import { BACKGROUND_COLOR, BRAND_PRIMARY } from "../../theme";
 
 class CreateNew extends PureComponent {
   static navigationOptions = ({ navigation }) => {
     return {
-      headerTitle: "Counters",
+      headerTitle: "Add new",
       headerRight: (
-        <Button onPress={() => navigation.navigate("CreateNew")} title="Save" color={TEXT_COLOR} />
+        <Button
+          onPress={() => navigation.navigate("CreateNew")}
+          title="Save"
+          color={BRAND_PRIMARY}
+        />
       ),
-      headerLeft: <Button onPress={() => navigation.goBack()} title="Cancel" color={TEXT_COLOR} />,
+      headerLeft: (
+        <Button onPress={() => navigation.goBack()} title="Cancel" color={BRAND_PRIMARY} />
+      ),
     };
   };
   state = {
@@ -50,15 +56,16 @@ class CreateNew extends PureComponent {
       <View
         style={{
           flex: 1,
+          backgroundColor: BACKGROUND_COLOR,
           width: "100%",
           height: "100%",
         }}
       >
-        <FieldGroup marginBottom={2}>
+        <FieldGroup marginBottom={2} marginTop={1}>
           <TextInput placeholder="Name" onChangeText={name => this.setState({ name })} />
         </FieldGroup>
         <FieldGroup>
-          {/* <Select
+          <Select
             label="Reset"
             value={this.state.reset}
             onChange={reset => this.setState({ reset })}
@@ -69,7 +76,7 @@ class CreateNew extends PureComponent {
               { label: "Monthly", value: RESET_MONTHLY },
               { label: "Yearly", value: RESET_YEARLY },
             ]}
-          /> */}
+          />
         </FieldGroup>
       </View>
     );
