@@ -1,9 +1,12 @@
 import React, { PureComponent } from "react";
 import { View, TextInput as NativeTextInput } from "react-native";
+import { Transition, animated } from "react-spring/native";
 
 import styles from "./styles";
 import Touchable from "../Touchable";
 import Icon from "../Icon";
+
+const AnimatedView = animated(View);
 
 class SearchBar extends PureComponent {
   static defaultProps = {
@@ -28,11 +31,23 @@ class SearchBar extends PureComponent {
             placeholder="Search"
             placeholderTextColor={styles.placeholder.color}
           />
-          {value.length > 0 && (
-            <Touchable style={styles.clearIconTouchable} onPress={this._clear}>
-              <Icon name="close-circle" style={styles.clearIcon} size={20} />
-            </Touchable>
-          )}
+          <Transition
+            items={value.length > 0}
+            from={{ opacity: 0 }}
+            enter={{ opacity: 1 }}
+            leave={{ opacity: 0 }}
+          >
+            {show =>
+              show &&
+              (props => (
+                <AnimatedView style={props}>
+                  <Touchable style={styles.clearIconTouchable} onPress={this._clear}>
+                    <Icon name="close-circle" style={styles.clearIcon} size={20} />
+                  </Touchable>
+                </AnimatedView>
+              ))
+            }
+          </Transition>
         </View>
       </View>
     );

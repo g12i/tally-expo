@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
   input: {
     height: "100%",
     marginLeft: 6,
-    backgroundColor: "red",
     fontSize: 16,
     fontWeight: "400",
     flex: 1,
@@ -39,8 +38,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   clearIcon: {
-    left: 1,
-    top: 1,
     color: TEXT_PLACEHOLDER_COLOR,
   },
 });
