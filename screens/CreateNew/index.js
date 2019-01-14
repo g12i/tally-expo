@@ -32,8 +32,14 @@ class CreateNew extends PureComponent {
     reset: RESET_NEVER,
     backgroundSync: false,
   };
-  navigateToResetFrequency = () => {
-    this.props.navigation.navigate("ChooseResetFrequency");
+  _navigateToResetFrequency = () => {
+    this.props.navigation.navigate("ChooseResetFrequency", {
+      onChange: this._setReset,
+      value: this.state.reset,
+    });
+  };
+  _setReset = reset => {
+    this.setState({ reset });
   };
   navigateToBackgroundChoice = () => {
     this.props.navigation.navigate("ChooseBackground");
@@ -68,8 +74,7 @@ class CreateNew extends PureComponent {
           <Select
             label="Reset"
             value={this.state.reset}
-            onPressLabel={this.navigateToResetFrequency}
-            onChange={reset => this.setState({ reset })}
+            onPressLabel={this._navigateToResetFrequency}
             options={[
               { label: "Never", value: RESET_NEVER },
               { label: "Daily", value: RESET_DAILY },

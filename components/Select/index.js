@@ -6,9 +6,6 @@ import Icon from "../Icon";
 import Touchable from "../Touchable";
 
 class Select extends PureComponent {
-  onChange = value => () => {
-    this.props.onChange(value);
-  };
   getSelectedOption = () => {
     const { options, value } = this.props;
     return options.find(({ value: itemValue }) => itemValue === value);

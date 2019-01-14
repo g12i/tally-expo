@@ -4,8 +4,6 @@ import { GestureHandler } from "expo";
 import { BRAND_PRIMARY, BACKGROUND_COLOR } from "../../theme";
 
 import TextButton from "../../components/TextButton";
-import FieldGroup from "../../components/FieldGroup";
-import Icon from "../../components/Icon";
 
 const { RectButton } = GestureHandler;
 
@@ -18,21 +16,9 @@ class ChooseBackground extends PureComponent {
   };
 
   render() {
-    const { options = [] } = this.props;
     return (
       <View style={{ flex: 1, backgroundColor: BACKGROUND_COLOR }}>
-        <FieldGroup>
-          {options.map(({ value: itemValue, label }) => (
-            <RectButton
-              style={styles.option}
-              onPress={this.onChange(itemValue)}
-              key={`option-${itemValue}`}
-            >
-              <Text style={styles.optionText}>{label}</Text>
-              {value === itemValue && <Icon name="checkmark" color={BRAND_PRIMARY} size={32} />}
-            </RectButton>
-          ))}
-        </FieldGroup>
+        <Text>Hello world</Text>
       </View>
     );
   }

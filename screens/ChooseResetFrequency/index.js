@@ -30,19 +30,18 @@ class ChooseResetFrequency extends PureComponent {
   ];
 
   _onChange = value => {
-    console.log(value);
+    const { navigation } = this.props;
+
+    const onChange = navigation.getParam("onChange", () => {});
+    onChange(value);
+    navigation.goBack();
   };
 
   render() {
-    const value = null;
+    const value = this.props.navigation.getParam("value", null);
     return (
       <View style={{ flex: 1, backgroundColor: BACKGROUND_COLOR }}>
-        <OptionList
-          options={this.options}
-          value={RESET_MONTHLY}
-          onChange={this._onChange}
-          marginTop={2}
-        />
+        <OptionList options={this.options} value={value} onChange={this._onChange} marginTop={2} />
       </View>
     );
   }
