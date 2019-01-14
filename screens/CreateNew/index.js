@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { View } from "react-native";
+import { Button, View } from "react-native";
 
 import {
   RESET_NEVER,
@@ -13,12 +13,20 @@ import {
 } from "../../reducers/counters";
 
 import FieldGroup from "../../components/FieldGroup";
-import Header from "../../components/Header";
 import Select from "../../components/Select";
-import TextButton from "../../components/TextButton";
 import TextInput from "../../components/TextInput";
+import { TEXT_COLOR } from "../../theme";
 
 class CreateNew extends PureComponent {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: "Counters",
+      headerRight: (
+        <Button onPress={() => navigation.navigate("CreateNew")} title="Save" color={TEXT_COLOR} />
+      ),
+      headerLeft: <Button onPress={() => navigation.goBack()} title="Cancel" color={TEXT_COLOR} />,
+    };
+  };
   state = {
     name: "",
     reset: RESET_NEVER,
@@ -38,7 +46,6 @@ class CreateNew extends PureComponent {
     this.props.hide();
   };
   render() {
-    const { hide } = this.props;
     return (
       <View
         style={{
@@ -47,23 +54,11 @@ class CreateNew extends PureComponent {
           height: "100%",
         }}
       >
-        <Header
-          leftButton={<TextButton title="Cancel" onPress={hide} />}
-          rightButton={
-            <TextButton
-              title="Save"
-              onPress={this.saveAndHide}
-              disabled={this.state.name.length === 0 || this.state.backgroundSync}
-            />
-          }
-          title="Create new"
-          marginBottom={1}
-        />
         <FieldGroup marginBottom={2}>
           <TextInput placeholder="Name" onChangeText={name => this.setState({ name })} />
         </FieldGroup>
         <FieldGroup>
-          <Select
+          {/* <Select
             label="Reset"
             value={this.state.reset}
             onChange={reset => this.setState({ reset })}
@@ -74,7 +69,7 @@ class CreateNew extends PureComponent {
               { label: "Monthly", value: RESET_MONTHLY },
               { label: "Yearly", value: RESET_YEARLY },
             ]}
-          />
+          /> */}
         </FieldGroup>
       </View>
     );
