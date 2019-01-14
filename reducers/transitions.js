@@ -1,7 +1,7 @@
-import uuid from 'uuid/v4';
+import uuid from "uuid/v4";
 
-export const INCREMENT = 'transitions/INCREMENT';
-export const DECREMENT = 'transitions/DECREMENT';
+export const INCREMENT = "transitions/INCREMENT";
+export const DECREMENT = "transitions/DECREMENT";
 
 export const increment = counterId => ({
   type: INCREMENT,
@@ -29,133 +29,133 @@ const initialState = [
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: 1,
-    counterId: '1',
+    counterId: "1",
   },
   {
     date: new Date().getTime(),
     id: uuid(),
     transition: -1,
-    counterId: '2',
+    counterId: "2",
   },
 ];
 

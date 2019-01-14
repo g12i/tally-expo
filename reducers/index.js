@@ -1,7 +1,6 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
-import counters from './counters';
-import transitions from './transitions';
-import ui from './ui';
+import counters from "./counters";
+import transitions from "./transitions";
 
-export default combineReducers({ counters, transitions, ui });
+export default combineReducers({ counters, transitions });
