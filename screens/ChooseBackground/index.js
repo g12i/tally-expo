@@ -60,9 +60,10 @@ class ChooseBackground extends PureComponent {
   };
 
   fetchPictures = () => {
-    this._fetchPictures(this.state.query, this.state.page).then(({ photos, isLastPage }) => {
+    this._fetchPictures(this.state.query, 1).then(({ photos, isLastPage }) => {
       this.setState({
         results: photos,
+        page: 1,
         isLastPage,
       });
     });
