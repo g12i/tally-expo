@@ -21,6 +21,7 @@ class ChooseBackground extends PureComponent {
   state = {
     loading: false,
     page: 1,
+    isLastPage: false,
     query: "",
     results: [],
   };
@@ -39,36 +40,42 @@ class ChooseBackground extends PureComponent {
 
   _fetchPictures = async (query, page) => {
     try {
-      console.log(`Searching for ${query}`);
       this.setState({ loading: true });
-      const photos = await searchPhotos(query, page);
-
-      return photos.map(photo => ({
-        author: photo.user.name,
-        id: photo.id,
-        uri: photo.urls.small,
-      }));
+      const { photos, isLastPage } = await searchPhotos(query, page);
+      return {
+        photos: photos.map(photo => ({
+          author: photo.user.name,
+          id: photo.id,
+          uri: photo.urls.small,
+        })),
+        isLastPage,
+      };
     } catch (err) {
       // @todo - show error
       console.log(err);
+      throw err;
     } finally {
       this.setState({ loading: false });
     }
   };
 
   fetchPictures = () => {
-    this._fetchPictures(this.state.query, this.state.page).then(newResults => {
+    this._fetchPictures(this.state.query, this.state.page).then(({ photos, isLastPage }) => {
       this.setState({
-        results: newResults,
+        results: photos,
+        isLastPage,
       });
     });
   };
 
   fetchNextPage = () => {
-    this._fetchPictures(this.state.query, this.state.page + 1).then(newResults => {
+    if (this.state.isLastPage) return;
+
+    this._fetchPictures(this.state.query, this.state.page + 1).then(({ photos, isLastPage }) => {
       this.setState(state => ({
-        results: state.results.concat(newResults),
-        page: state.page + 1,
+        results: state.results.concat(photos),
+        page: !isLastPage ? state.page + 1 : state.page,
+        isLastPage,
       }));
     });
   };
@@ -135,9 +142,8 @@ class ChooseBackground extends PureComponent {
                 }}
               >
                 {item.map((image, i) => (
-                  <View>
+                  <View key={`image-${i}`}>
                     <ImageBackground
-                      key={`image-${i}`}
                       imageStyle={{ borderRadius: 5 }}
                       style={{
                         borerRadius: 5,
