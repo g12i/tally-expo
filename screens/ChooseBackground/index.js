@@ -28,7 +28,7 @@ class ChooseBackground extends PureComponent {
   onEndReachedCalledDuringMomentum = false;
 
   componentDidMount() {
-    this.fetchPictures();
+    // this.fetchPictures();
   }
 
   componentDidUpdate(_, prevState) {
@@ -50,6 +50,7 @@ class ChooseBackground extends PureComponent {
       }));
     } catch (err) {
       // @todo - show error
+      console.log(err);
     } finally {
       this.setState({ loading: false });
     }
@@ -134,18 +135,21 @@ class ChooseBackground extends PureComponent {
                 }}
               >
                 {item.map((image, i) => (
-                  <ImageBackground
-                    key={`image-${i}`}
-                    imageStyle={{ borderRadius: 5 }}
-                    style={{
-                      borerRadius: 5,
-                      width: imageSize,
-                      height: imageSize,
-                    }}
-                    source={{
-                      uri: image.uri,
-                    }}
-                  />
+                  <View>
+                    <ImageBackground
+                      key={`image-${i}`}
+                      imageStyle={{ borderRadius: 5 }}
+                      style={{
+                        borerRadius: 5,
+                        width: imageSize,
+                        height: imageSize,
+                      }}
+                      source={{
+                        uri: image.uri,
+                      }}
+                    />
+                    <Text style={{ color: TEXT_COLOR }}>{image.author}</Text>
+                  </View>
                 ))}
               </View>
             )}
