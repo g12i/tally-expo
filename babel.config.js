@@ -3,10 +3,12 @@ module.exports = function(api) {
   return {
     presets: ["babel-preset-expo"],
     plugins: [
-      "transform-inline-environment-variables",
-      {
-        include: ["UNSPLASH_ACCESS_KEY"],
-      },
+      [
+        "transform-inline-environment-variables",
+        {
+          include: ["UNSPLASH_ACCESS_KEY"],
+        },
+      ],
     ],
   };
 };
