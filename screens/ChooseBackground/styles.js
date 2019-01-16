@@ -14,14 +14,6 @@ const styles = StyleSheet.create({
     fontSize: 34,
     fontWeight: "700",
   },
-  loaderWrapper: {
-    alignItems: "center",
-  },
-  pictureWrapper: {
-    width: 200,
-    height: 200,
-  },
-  picture: {},
 });
 
 export default styles;

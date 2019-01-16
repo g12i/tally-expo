@@ -1,14 +1,12 @@
-import React, { PureComponent } from "react";
-import { Text, View, FlatList, ActivityIndicator, ImageBackground, ScrollView } from "react-native";
-import chunk from "lodash/chunk";
 import debounce from "lodash/debounce";
-import styles from "./styles";
-
-import TextButton from "../../components/TextButton";
+import React, { PureComponent } from "react";
+import { Text, View } from "react-native";
+import Gallery from "../../components/Gallery";
 import Margin from "../../components/Margin";
 import SearchBar from "../../components/SearchBar";
-import { TEXT_COLOR } from "../../theme";
+import TextButton from "../../components/TextButton";
 import { searchPhotos } from "../../utils/unsplash";
+import styles from "./styles";
 
 class ChooseBackground extends PureComponent {
   static navigationOptions = ({ navigation }) => {
@@ -25,8 +23,6 @@ class ChooseBackground extends PureComponent {
     query: "",
     results: [],
   };
-  galleryWidth = 0;
-  onEndReachedCalledDuringMomentum = false;
 
   componentDidMount() {
     // this.fetchPictures();
@@ -88,27 +84,13 @@ class ChooseBackground extends PureComponent {
     if (query.length) this.fetchPicturesThrottled();
   };
 
-  _onGalleryLayout = event => {
-    const { width } = event.nativeEvent.layout;
-    this.galleryWidth = width - 32;
-  };
-
-  _galleryKeyExtractor = (_, index) => `gallery-${index}`;
-
-  _resetOnEndReachedCalledDuringMomentum = () => (this.onEndReachedCalledDuringMomentum = false);
-
   _onEndReached = () => {
-    if (!this.onEndReachedCalledDuringMomentum) {
-      this.fetchNextPage(this.state.query, this.state.page);
-      this.onEndReachedCalledDuringMomentum = true;
-    }
+    this.fetchNextPage(this.state.query, this.state.page);
   };
 
   render() {
-    const chunkSize = 2;
-    const imageSize = (this.galleryWidth - (chunkSize - 1) * 16) / chunkSize;
     return (
-      <View style={styles.screen} onLayout={this._onGalleryLayout}>
+      <View style={styles.screen}>
         <View style={styles.padding}>
           <Margin top={2} bottom={1}>
             <Text style={styles.header}>Unsplash photos</Text>
@@ -116,50 +98,10 @@ class ChooseBackground extends PureComponent {
           <SearchBar value={this.state.query} onChangeText={this._setQuery} />
         </View>
         <Margin top={2} style={{ flex: 1 }}>
-          <FlatList
-            keyExtractor={this._galleryKeyExtractor}
-            data={chunk(this.state.results, chunkSize)}
-            style={styles.padding}
-            ListFooterComponent={() => {
-              return (
-                this.state.loading && (
-                  <View style={styles.loaderWrapper}>
-                    <ActivityIndicator size="large" color={TEXT_COLOR} />
-                  </View>
-                )
-              );
-            }}
-            onMomentumScrollBegin={this._resetOnEndReachedCalledDuringMomentum}
-            onEndReachedThreshold={0.5}
+          <Gallery
+            data={this.state.results}
+            loading={this.state.loading}
             onEndReached={this._onEndReached}
-            renderItem={({ item }, i) => (
-              <View
-                style={{
-                  flexDirection: "row",
-                  flex: 1,
-                  marginBottom: 16,
-                  alignContent: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                {item.map((image, i) => (
-                  <View key={`image-${i}`}>
-                    <ImageBackground
-                      imageStyle={{ borderRadius: 5 }}
-                      style={{
-                        borerRadius: 5,
-                        width: imageSize,
-                        height: imageSize,
-                      }}
-                      source={{
-                        uri: image.uri,
-                      }}
-                    />
-                    <Text style={{ color: TEXT_COLOR }}>{image.author}</Text>
-                  </View>
-                ))}
-              </View>
-            )}
           />
         </Margin>
       </View>
