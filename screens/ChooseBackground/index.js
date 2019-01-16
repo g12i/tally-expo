@@ -102,6 +102,7 @@ class ChooseBackground extends PureComponent {
             data={this.state.results}
             loading={this.state.loading}
             onEndReached={this._onEndReached}
+            onItemPress={id => console.log(id)}
           />
         </Margin>
       </View>

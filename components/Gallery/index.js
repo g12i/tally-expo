@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import React, { PureComponent } from "react";
 import { ActivityIndicator, FlatList, ImageBackground, Text, View } from "react-native";
 import { TEXT_COLOR } from "../../theme";
+import Touchable from "../Touchable";
 import styles from "./styles";
 
 class Gallery extends PureComponent {
@@ -12,6 +13,7 @@ class Gallery extends PureComponent {
     data: [],
     loading: false,
     onEndReached: noop,
+    onItemPress: noop,
     selectedId: null,
   };
 
@@ -19,12 +21,14 @@ class Gallery extends PureComponent {
     columns: PropTypes.number,
     data: PropTypes.arrayOf(
       PropTypes.shape({
-        uri: PropTypes.string.isRequired,
         author: PropTypes.string.isRequired,
+        id: PropTypes.string.isRequired,
+        uri: PropTypes.string.isRequired,
       })
     ).isRequired,
     loading: PropTypes.bool,
     onEndReached: PropTypes.func,
+    onItemPress: PropTypes.func,
     selectedId: PropTypes.string,
   };
 
@@ -32,27 +36,26 @@ class Gallery extends PureComponent {
   momentumBegins = false;
   _onGalleryLayout = event => (this.galleryWidth = event.nativeEvent.layout.width - 32);
   _onMomentumBegins = () => (this.momentumBegins = false);
-  _rowKeyExtractor = (_, i) => `row-${i}`;
-  _columnKeyExtractor = (_, i) => `column=${i}`;
+  _rowKeyExtractor = chunk => chunk.map(item => item.id).join("-");
+  _columnKeyExtractor = item => item.id;
   _onEndReached = () => {
     if (!this.momentumBegins) {
       this.props.onEndReached();
       this.momentumBegins = true;
     }
   };
+  _onItemPress = item => () => {
+    this.props.onItemPress(item.id);
+  };
 
-  renderLoader() {
-    const { loading } = this.props;
-    return (
-      loading && (
-        <View style={styles.loaderWrapper}>
-          <ActivityIndicator size="large" color={TEXT_COLOR} />
-        </View>
-      )
+  renderLoader = () =>
+    this.props.loading && (
+      <View style={styles.loaderWrapper}>
+        <ActivityIndicator size="large" color={TEXT_COLOR} />
+      </View>
     );
-  }
 
-  renderItem({ item: chunk }) {
+  renderItem = ({ item: chunk }) => {
     const { columns } = this.props;
     const imageSize = (this.galleryWidth - (columns - 1) * 16) / columns;
 
@@ -66,25 +69,25 @@ class Gallery extends PureComponent {
           justifyContent: "space-between",
         }}
       >
-        {chunk.map((image, i) => (
-          <View key={this._columnKeyExtractor(image, i)}>
-            <ImageBackground
-              imageStyle={{ borderRadius: 5 }}
-              style={{
-                borerRadius: 5,
-                width: imageSize,
-                height: imageSize,
-              }}
-              source={{
-                uri: image.uri,
-              }}
-            />
-            <Text style={{ color: TEXT_COLOR }}>{image.author}</Text>
+        {chunk.map((item, i) => (
+          <View key={this._columnKeyExtractor(item, i)}>
+            <Touchable onPress={this._onItemPress(item)}>
+              <ImageBackground
+                imageStyle={{ borderRadius: 5 }}
+                style={{
+                  borderRadius: 5,
+                  width: imageSize,
+                  height: imageSize,
+                }}
+                source={{ uri: item.uri }}
+              />
+              <Text style={{ color: TEXT_COLOR }}>{item.author}</Text>
+            </Touchable>
           </View>
         ))}
       </View>
     );
-  }
+  };
 
   render() {
     const { columns, data } = this.props;
