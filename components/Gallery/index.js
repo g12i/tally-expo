@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import React, { PureComponent } from "react";
 import { ActivityIndicator, FlatList, ImageBackground, Text, View } from "react-native";
 import { TEXT_COLOR } from "../../theme";
+import Icon from "../Icon";
 import Touchable from "../Touchable";
 import styles from "./styles";
 
@@ -55,38 +56,38 @@ class Gallery extends PureComponent {
       </View>
     );
 
-  renderItem = ({ item: chunk }) => {
-    const { columns } = this.props;
+  renderItem = (item, i) => {
+    const { columns, selectedId } = this.props;
     const imageSize = (this.galleryWidth - (columns - 1) * 16) / columns;
-
+    const isSelected = item.id === selectedId;
     return (
-      <View
-        style={{
-          flexDirection: "row",
-          flex: 1,
-          marginBottom: 16,
-          alignContent: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        {chunk.map((item, i) => (
-          <View key={this._columnKeyExtractor(item, i)}>
-            <Touchable onPress={this._onItemPress(item)}>
-              <ImageBackground
-                imageStyle={{ borderRadius: 5 }}
-                style={{
-                  borderRadius: 5,
-                  width: imageSize,
-                  height: imageSize,
-                }}
-                source={{ uri: item.uri }}
-              />
-              <Text style={{ color: TEXT_COLOR }}>{item.author}</Text>
-            </Touchable>
+      <View key={this._columnKeyExtractor(item, i)}>
+        <Touchable onPress={this._onItemPress(item)}>
+          <View style={{ position: "relative" }}>
+            <ImageBackground
+              imageStyle={{ borderRadius: 5 }}
+              style={{
+                borderRadius: 5,
+                width: imageSize,
+                height: imageSize,
+              }}
+              source={{ uri: item.uri }}
+            />
+            {isSelected && (
+              <View style={styles.selectedWrapper}>
+                <Icon name="checkmark-circle-outline" size={40} color={TEXT_COLOR} />
+                <Text style={styles.selectedText}>Selected</Text>
+              </View>
+            )}
           </View>
-        ))}
+          <Text style={{ color: TEXT_COLOR }}>{item.author}</Text>
+        </Touchable>
       </View>
     );
+  };
+
+  renderChunk = ({ item: chunk }) => {
+    return <View style={styles.row}>{chunk.map(this.renderItem)}</View>;
   };
 
   render() {
@@ -103,7 +104,7 @@ class Gallery extends PureComponent {
           onMomentumScrollBegin={this._onMomentumBegins}
           onEndReachedThreshold={0.5}
           onEndReached={this._onEndReached}
-          renderItem={this.renderItem}
+          renderItem={this.renderChunk}
         />
       </View>
     );
