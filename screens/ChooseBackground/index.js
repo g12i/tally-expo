@@ -28,6 +28,7 @@ class ChooseBackground extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      error: null,
       isLastPage: false,
       loading: false,
       noResults: false,
@@ -48,6 +49,7 @@ class ChooseBackground extends PureComponent {
   componentDidUpdate(_, prevState) {
     if (prevState.query && this.state.query === "") {
       this.setState({
+        error: null,
         noResults: false,
         results: [],
       }); // clear the results
@@ -56,7 +58,7 @@ class ChooseBackground extends PureComponent {
 
   _fetchPictures = async (query, page, apiCall = searchPhotos) => {
     try {
-      this.setState({ loading: true });
+      this.setState({ loading: true, error: null });
       const { photos, isLastPage } = await apiCall(query, page);
       return {
         photos: photos.map(photo => ({
@@ -67,9 +69,9 @@ class ChooseBackground extends PureComponent {
         isLastPage,
       };
     } catch (err) {
-      // @todo - show error
-      console.log(err);
-      throw err;
+      this.setState({
+        error: err,
+      });
     } finally {
       this.setState({ loading: false });
     }
@@ -120,11 +122,12 @@ class ChooseBackground extends PureComponent {
   };
 
   renderGallery = () => {
-    if (this.state.noResults) {
+    if (this.state.noResults || this.state.error) {
       return (
         <View style={[styles.padding, styles.notFoundWrapper]}>
           <Margin top={2}>
-            <Text style={styles.notFoundText}>No results</Text>
+            {this.state.noResults && <Text style={styles.notFoundText}>No results</Text>}
+            {this.state.error && <Text style={styles.notFoundText}>Error!</Text>}
           </Margin>
         </View>
       );

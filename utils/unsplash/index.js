@@ -1,5 +1,4 @@
-import tmp from "./tmp.json";
-
+// eslint-disable-next-line no-undef
 const API_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
 
 const call = async endpoint => {
