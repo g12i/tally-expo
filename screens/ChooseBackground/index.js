@@ -28,9 +28,10 @@ class ChooseBackground extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
-      page: 1,
       isLastPage: false,
+      loading: false,
+      noResults: false,
+      page: 1,
       query: props.initialQuery,
       results: [],
     };
@@ -46,7 +47,10 @@ class ChooseBackground extends PureComponent {
 
   componentDidUpdate(_, prevState) {
     if (prevState.query && this.state.query === "") {
-      this.setState({ results: [] }); // clear the results
+      this.setState({
+        noResults: false,
+        results: [],
+      }); // clear the results
     }
   }
 
@@ -74,9 +78,10 @@ class ChooseBackground extends PureComponent {
   fetchPictures = () => {
     this._fetchPictures(this.state.query, 1).then(({ photos, isLastPage }) => {
       this.setState({
-        results: photos,
-        page: 1,
         isLastPage,
+        noResults: photos.length === 0,
+        page: 1,
+        results: photos,
       });
     });
   };
@@ -125,6 +130,7 @@ class ChooseBackground extends PureComponent {
         </View>
         <Margin top={2} style={{ flex: 1 }}>
           <Gallery
+            noResults={this.state.noResults}
             data={this.state.results}
             loading={this.state.loading}
             onEndReached={this._onEndReached}

@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     marginBottom: 16,
-    alignContent: "center",
+    alignItems: "center",
     justifyContent: "space-between",
   },
   selectedWrapper: {
@@ -27,6 +27,14 @@ const styles = StyleSheet.create({
   selectedText: {
     color: TEXT_COLOR,
     fontSize: 16,
+  },
+  notFoundWrapper: {
+    flex: 1,
+    alignItems: "center",
+  },
+  notFoundText: {
+    color: TEXT_COLOR,
+    fontSize: 18,
   },
 });
 
