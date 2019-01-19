@@ -17,19 +17,15 @@ const call = async endpoint => {
 };
 
 export const searchPhotos = (query, page = 1) => {
-  // return new Promise(resolve => {
-  //   setTimeout(() => {
-  //     const response = tmp[page - 1];
-
-  //     console.log(`Query for ${query}, page=${page}`);
-  //     resolve({
-  //       photos: response.results,
-  //       isLastPage: response.total_pages === page,
-  //     });
-  //   }, 1000);
-  // });
   return call(`/search/photos?query=${query}&page=${page}`).then(response => ({
     photos: response.results,
     isLastPage: response.total_pages === page,
+  }));
+};
+
+export const getRandomPhotos = () => {
+  return call(`/photos/random?count=10`).then(response => ({
+    photos: response,
+    isLastPage: true,
   }));
 };

@@ -1,11 +1,12 @@
 import debounce from "lodash/debounce";
+import PropTypes from "prop-types";
 import React, { PureComponent } from "react";
 import { Text, View } from "react-native";
 import Gallery from "../../components/Gallery";
 import Margin from "../../components/Margin";
 import SearchBar from "../../components/SearchBar";
 import TextButton from "../../components/TextButton";
-import { searchPhotos } from "../../utils/unsplash";
+import { getRandomPhotos, searchPhotos } from "../../utils/unsplash";
 import styles from "./styles";
 
 class ChooseBackground extends PureComponent {
@@ -16,16 +17,31 @@ class ChooseBackground extends PureComponent {
     };
   };
 
-  state = {
-    loading: false,
-    page: 1,
-    isLastPage: false,
-    query: "",
-    results: [],
+  static propTypes = {
+    initialQuery: PropTypes.string,
   };
 
+  static defaultProps = {
+    initialQuery: "",
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+      page: 1,
+      isLastPage: false,
+      query: props.initialQuery,
+      results: [],
+    };
+  }
+
   componentDidMount() {
-    // this.fetchPictures();
+    if (this.state.query) {
+      this.fetchPictures();
+    } else {
+      this.fetchRandomPictures();
+    }
   }
 
   componentDidUpdate(_, prevState) {
@@ -34,10 +50,10 @@ class ChooseBackground extends PureComponent {
     }
   }
 
-  _fetchPictures = async (query, page) => {
+  _fetchPictures = async (query, page, apiCall = searchPhotos) => {
     try {
       this.setState({ loading: true });
-      const { photos, isLastPage } = await searchPhotos(query, page);
+      const { photos, isLastPage } = await apiCall(query, page);
       return {
         photos: photos.map(photo => ({
           author: photo.user.name,
@@ -74,6 +90,16 @@ class ChooseBackground extends PureComponent {
         page: !isLastPage ? state.page + 1 : state.page,
         isLastPage,
       }));
+    });
+  };
+
+  fetchRandomPictures = async () => {
+    this._fetchPictures(null, null, getRandomPhotos).then(({ photos, isLastPage }) => {
+      this.setState({
+        results: photos,
+        page: 1,
+        isLastPage,
+      });
     });
   };
 
