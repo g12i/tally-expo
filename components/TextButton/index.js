@@ -16,7 +16,7 @@ class TextButton extends Component {
       textStyles.push(styles.textDisabled);
       accessibilityStates.push("disabled");
     }
-    const formattedTitle = Platform.OS === "android" ? title.toUpperCase() : title;
+    const formattedTitle = Platform.OS === "android" && title ? title.toUpperCase() : title;
     return (
       <Touchable
         accessibilityLabel={accessibilityLabel}
