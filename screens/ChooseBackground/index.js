@@ -119,6 +119,27 @@ class ChooseBackground extends PureComponent {
     this.fetchNextPage(this.state.query, this.state.page);
   };
 
+  renderGallery = () => {
+    if (this.state.noResults) {
+      return (
+        <View style={[styles.padding, styles.notFoundWrapper]}>
+          <Margin top={2}>
+            <Text style={styles.notFoundText}>No results</Text>
+          </Margin>
+        </View>
+      );
+    }
+
+    return (
+      <Gallery
+        data={this.state.results}
+        loading={this.state.loading}
+        onEndReached={this._onEndReached}
+        onItemPress={id => console.log(id)}
+      />
+    );
+  };
+
   render() {
     return (
       <View style={styles.screen}>
@@ -129,13 +150,7 @@ class ChooseBackground extends PureComponent {
           <SearchBar value={this.state.query} onChangeText={this._setQuery} />
         </View>
         <Margin top={2} style={{ flex: 1 }}>
-          <Gallery
-            noResults={this.state.noResults}
-            data={this.state.results}
-            loading={this.state.loading}
-            onEndReached={this._onEndReached}
-            onItemPress={id => console.log(id)}
-          />
+          {this.renderGallery()}
         </Margin>
       </View>
     );

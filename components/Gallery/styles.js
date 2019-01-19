@@ -28,14 +28,6 @@ const styles = StyleSheet.create({
     color: TEXT_COLOR,
     fontSize: 16,
   },
-  notFoundWrapper: {
-    flex: 1,
-    alignItems: "center",
-  },
-  notFoundText: {
-    color: TEXT_COLOR,
-    fontSize: 18,
-  },
 });
 
 export default styles;

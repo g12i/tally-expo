@@ -14,6 +14,14 @@ const styles = StyleSheet.create({
     fontSize: 34,
     fontWeight: "700",
   },
+  notFoundWrapper: {
+    flex: 1,
+    alignItems: "center",
+  },
+  notFoundText: {
+    color: TEXT_COLOR,
+    fontSize: 18,
+  },
 });
 
 export default styles;

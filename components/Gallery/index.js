@@ -5,7 +5,6 @@ import React, { PureComponent } from "react";
 import { ActivityIndicator, FlatList, ImageBackground, Text, View } from "react-native";
 import { TEXT_COLOR } from "../../theme";
 import Icon from "../Icon";
-import Margin from "../Margin";
 import Touchable from "../Touchable";
 import styles from "./styles";
 
@@ -14,7 +13,6 @@ class Gallery extends PureComponent {
     columns: 2,
     data: [],
     loading: false,
-    noResults: false,
     onEndReached: noop,
     onItemPress: noop,
     selectedId: null,
@@ -30,7 +28,6 @@ class Gallery extends PureComponent {
       })
     ).isRequired,
     loading: PropTypes.bool,
-    noResults: PropTypes.bool,
     onEndReached: PropTypes.func,
     onItemPress: PropTypes.func,
     selectedId: PropTypes.string,
@@ -94,17 +91,7 @@ class Gallery extends PureComponent {
   };
 
   render() {
-    const { columns, data, noResults } = this.props;
-    if (noResults) {
-      return (
-        <View style={[styles.padding, styles.notFoundWrapper]}>
-          <Margin top={2}>
-            <Text style={styles.notFoundText}>No results</Text>
-          </Margin>
-        </View>
-      );
-    }
-
+    const { columns, data } = this.props;
     const chunks = chunk(data, columns);
 
     return (
