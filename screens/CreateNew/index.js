@@ -1,13 +1,10 @@
 import noop from "lodash/noop";
 import PropTypes from "prop-types";
 import React, { PureComponent } from "react";
-import { Button, View } from "react-native";
+import { Button, ImageBackground, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { CounterListItem } from "../../components/CounterListItem";
 import FieldGroup from "../../components/FieldGroup";
-import Heading from "../../components/Heading";
-import Margin from "../../components/Margin/index";
 import Select from "../../components/Select";
 import TextInput from "../../components/TextInput";
 import {
@@ -18,7 +15,8 @@ import {
   RESET_WEEKLY,
   RESET_YEARLY,
 } from "../../reducers/counters";
-import { BACKGROUND_COLOR, BRAND_PRIMARY } from "../../theme";
+import { BRAND_PRIMARY } from "../../theme";
+import styles from "./styles";
 
 const ResetLabels = {
   [RESET_NEVER]: "Never",
@@ -73,7 +71,7 @@ class CreateNew extends PureComponent {
     });
   };
 
-  navigateToBackgroundChoice = () => {
+  _navigateToBackgroundChoice = () => {
     this.props.navigation.navigate("ChooseBackground", {
       initialQuery: this.state.name,
       onChange: this._setBackground,
@@ -98,16 +96,21 @@ class CreateNew extends PureComponent {
     });
   };
 
+  renderBackgroundPreview = () => {
+    if (!this.state.background.id) return null;
+
+    return (
+      <ImageBackground
+        imageStyle={{ borderRadius: 2 }}
+        source={{ uri: this.state.background.uri }}
+        style={styles.backgroundPreview}
+      />
+    );
+  };
+
   render() {
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: BACKGROUND_COLOR,
-          width: "100%",
-          height: "100%",
-        }}
-      >
+      <View style={styles.container}>
         <FieldGroup marginBottom={2} marginTop={1}>
           <TextInput placeholder="Name" onChangeText={this._setName} />
         </FieldGroup>
@@ -119,20 +122,14 @@ class CreateNew extends PureComponent {
           />
           <Select
             label="Background"
-            value={this.state.background.id}
-            onPress={this.navigateToBackgroundChoice}
+            value={this.renderBackgroundPreview()}
+            onPress={this._navigateToBackgroundChoice}
           />
         </FieldGroup>
       </View>
     );
   }
 }
-
-CreateNew.defaultProps = {
-  addCounter: () => {},
-};
-
-CreateNew.propTypes = {};
 
 export default connect(
   null,
