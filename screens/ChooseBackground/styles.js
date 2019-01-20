@@ -9,11 +9,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: BACKGROUND_COLOR,
   },
-  header: {
-    color: TEXT_COLOR,
-    fontSize: 34,
-    fontWeight: "700",
-  },
   notFoundWrapper: {
     flex: 1,
     alignItems: "center",

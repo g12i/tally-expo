@@ -1,8 +1,10 @@
 import debounce from "lodash/debounce";
+import noop from "lodash/noop";
 import PropTypes from "prop-types";
 import React, { PureComponent } from "react";
 import { Text, View } from "react-native";
 import Gallery from "../../components/Gallery";
+import Heading from "../../components/Heading";
 import Margin from "../../components/Margin";
 import SearchBar from "../../components/SearchBar";
 import TextButton from "../../components/TextButton";
@@ -18,11 +20,17 @@ class ChooseBackground extends PureComponent {
   };
 
   static propTypes = {
-    initialQuery: PropTypes.string,
+    navigation: PropTypes.shape({
+      getParam: PropTypes.func,
+      goBack: PropTypes.func,
+    }),
   };
 
   static defaultProps = {
-    initialQuery: "",
+    navigation: {
+      getParam: noop,
+      goBack: noop,
+    },
   };
 
   constructor(props) {
@@ -33,7 +41,7 @@ class ChooseBackground extends PureComponent {
       loading: false,
       noResults: false,
       page: 1,
-      query: props.initialQuery,
+      query: props.navigation.getParam("initialQuery", ""),
       results: [],
     };
   }
@@ -121,6 +129,14 @@ class ChooseBackground extends PureComponent {
     this.fetchNextPage(this.state.query, this.state.page);
   };
 
+  _onChange = value => {
+    const { navigation } = this.props;
+
+    const onChange = navigation.getParam("onChange", noop);
+    onChange(value);
+    navigation.goBack();
+  };
+
   renderGallery = () => {
     if (this.state.noResults || this.state.error) {
       return (
@@ -132,13 +148,14 @@ class ChooseBackground extends PureComponent {
         </View>
       );
     }
-
+    const selectedId = this.props.navigation.getParam("value", null);
     return (
       <Gallery
         data={this.state.results}
         loading={this.state.loading}
         onEndReached={this._onEndReached}
-        onItemPress={id => console.log(id)}
+        onItemPress={this._onChange}
+        selectedId={selectedId}
       />
     );
   };
@@ -148,7 +165,7 @@ class ChooseBackground extends PureComponent {
       <View style={styles.screen}>
         <View style={styles.padding}>
           <Margin top={2} bottom={1}>
-            <Text style={styles.header}>Unsplash photos</Text>
+            <Heading level={1}>Unsplash photos</Heading>
           </Margin>
           <SearchBar value={this.state.query} onChangeText={this._setQuery} />
         </View>
