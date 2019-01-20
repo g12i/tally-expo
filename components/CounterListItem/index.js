@@ -121,8 +121,10 @@ export class CounterListItem extends Component {
                 {this.renderLeftAction(x)}
                 {this.renderRightAction(x)}
                 <AnimatedView style={{ transform: [{ translateX: x }] }}>
-                  {!!background.uri && (
+                  {background.uri ? (
                     <ImageBackground source={{ uri: background.uri }} style={styles.background} />
+                  ) : (
+                    <View style={styles.backgroundMock} />
                   )}
                   <View style={styles.backgroundMask} />
                   <View style={styles.content}>

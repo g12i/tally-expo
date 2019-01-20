@@ -12,6 +12,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlign: "center",
   },
+  backgroundMock: {
+    width: "100%",
+    height: 80,
+    display: "flex",
+    alignItems: "center",
+    textAlign: "center",
+    backgroundColor: "#232931",
+  },
   backgroundMask: {
     position: "absolute",
     width: "100%",
