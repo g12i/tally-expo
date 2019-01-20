@@ -1,15 +1,13 @@
-import React, { Component } from "react";
-import { View, Text, ImageBackground } from "react-native";
-import PropTypes from "prop-types";
-import { compose } from "redux";
-import { connect } from "react-redux";
 import { GestureHandler } from "expo";
-
-import { Spring, animated } from "react-spring/native";
-
-import styles from "./styles";
-import { increment, decrement } from "../../reducers/transitions";
+import PropTypes from "prop-types";
+import React, { Component } from "react";
+import { ImageBackground, Text, View } from "react-native";
+import { connect } from "react-redux";
+import { animated, Spring } from "react-spring/native";
+import { compose } from "redux";
+import { decrement, increment } from "../../reducers/transitions";
 import Icon from "../Icon";
+import styles from "./styles";
 
 const { State, PanGestureHandler } = GestureHandler;
 const AnimatedView = animated(View);
@@ -28,10 +26,32 @@ const interpolateIconSize = x => {
 
 const THRESHOLD = 80;
 
-class CounterListItem extends Component {
+export class CounterListItem extends Component {
   state = {
     down: false,
     deltaX: 0,
+  };
+
+  static propTypes = {
+    background: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      uri: PropTypes.string.isRequired,
+    }),
+    count: PropTypes.number,
+    decrement: PropTypes.func,
+    id: PropTypes.string.isRequired,
+    increment: PropTypes.func,
+    name: PropTypes.string.isRequired,
+  };
+
+  static defaultProps = {
+    background: {
+      id: "",
+      uri: "",
+    },
+    count: 0,
+    decrement: () => {},
+    increment: () => {},
   };
 
   _onPanGestureEvent = ({ nativeEvent }) => {
@@ -101,7 +121,9 @@ class CounterListItem extends Component {
                 {this.renderLeftAction(x)}
                 {this.renderRightAction(x)}
                 <AnimatedView style={{ transform: [{ translateX: x }] }}>
-                  <ImageBackground source={{ uri: background }} style={styles.background} />
+                  {!!background.uri && (
+                    <ImageBackground source={{ uri: background.uri }} style={styles.background} />
+                  )}
                   <View style={styles.backgroundMask} />
                   <View style={styles.content}>
                     <Text style={styles.nameText}>{name}</Text>
@@ -116,21 +138,6 @@ class CounterListItem extends Component {
     );
   }
 }
-
-CounterListItem.defaultProps = {
-  count: 0,
-  decrement: () => {},
-  increment: () => {},
-};
-
-CounterListItem.propTypes = {
-  background: PropTypes.string.isRequired,
-  count: PropTypes.number,
-  decrement: PropTypes.func,
-  id: PropTypes.string.isRequired,
-  increment: PropTypes.func,
-  name: PropTypes.string.isRequired,
-};
 
 export default compose(
   connect(
