@@ -98,6 +98,21 @@ class Edit extends PureComponent {
     }
   }
 
+  _navigateToResetFrequency = () => {
+    this.props.navigation.navigate("ChooseResetFrequency", {
+      onChange: this._setReset,
+      value: this.state.reset,
+    });
+  };
+
+  _navigateToBackgroundChoice = () => {
+    this.props.navigation.navigate("ChooseBackground", {
+      initialQuery: this.state.name,
+      onChange: this._setBackground,
+      value: this.state.background.id,
+    });
+  };
+
   _setName = name => this.setState({ name });
   _setReset = reset => this.setState({ reset });
   _setBackground = background => this.setState({ background });
