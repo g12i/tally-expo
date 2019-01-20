@@ -1,11 +1,24 @@
+import noop from "lodash/noop";
+import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Platform, Text, View } from "react-native";
+import Icon from "../Icon";
+import Touchable from "../Touchable";
 import styles from "./styles";
 
-import Touchable from "../Touchable";
-import Icon from "../Icon";
-
 class TextButton extends Component {
+  static propTypes = {
+    accessibilityLabel: PropTypes.string,
+    onPress: PropTypes.func.isRequired,
+    title: PropTypes.string,
+    icon: PropTypes.string,
+    disabled: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    disabled: false,
+  };
+
   render() {
     const { accessibilityLabel, onPress, title, icon, disabled } = this.props;
     const buttonStyles = [styles.button];
@@ -23,7 +36,7 @@ class TextButton extends Component {
         accessibilityRole="button"
         accessibilityStates={accessibilityStates}
         disabled={disabled}
-        onPress={onPress}
+        onPress={disabled ? noop : onPress}
       >
         <View style={buttonStyles}>
           {icon && <Icon name={icon} color={styles.text.color} size={28} />}
