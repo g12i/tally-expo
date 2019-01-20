@@ -1,13 +1,32 @@
-import React, { PureComponent } from "react";
-import { FlatList, Text } from "react-native";
 import PropTypes from "prop-types";
+import React, { PureComponent } from "react";
+import { FlatList } from "react-native";
 import { connect } from "react-redux";
-
 import { removeCounter } from "../../reducers/counters";
-import CounterListItem from "../CounterListItem";
 import { BACKGROUND_COLOR } from "../../theme";
+import CounterListItem from "../CounterListItem";
 
 class CounterList extends PureComponent {
+  static propTypes = {
+    counters: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        background: PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          uri: PropTypes.string.isRequired,
+        }),
+        count: PropTypes.number.isRequired,
+      })
+    ),
+    removeCounter: PropTypes.func,
+  };
+
+  static defaultProps = {
+    counters: [],
+    removeCounter: () => {},
+  };
+
   _keyExtractor = item => item.id;
 
   render() {
@@ -22,23 +41,6 @@ class CounterList extends PureComponent {
     );
   }
 }
-
-CounterList.defaultProps = {
-  counters: [],
-  removeCounter: () => {},
-};
-
-CounterList.propTypes = {
-  counters: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      background: PropTypes.string,
-      count: PropTypes.number.isRequired,
-    })
-  ),
-  removeCounter: PropTypes.func,
-};
 
 export default connect(
   state => ({
