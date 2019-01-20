@@ -47,7 +47,10 @@ class Gallery extends PureComponent {
     }
   };
   _onItemPress = item => () => {
-    this.props.onItemPress(item.id);
+    this.props.onItemPress({
+      id: item.id,
+      uri: item.uri,
+    });
   };
 
   renderLoader = () =>
