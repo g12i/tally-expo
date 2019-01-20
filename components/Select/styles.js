@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { TEXT_COLOR, TEXT_PLACEHOLDER_COLOR, FORM_BACKGROUND_COLOR } from "../../theme";
+import { TEXT_COLOR, TEXT_PLACEHOLDER_COLOR } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {
@@ -15,22 +15,19 @@ const styles = StyleSheet.create({
     color: TEXT_COLOR,
   },
   value: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  valueText: {
     fontSize: 16,
     fontWeight: "400",
     color: TEXT_PLACEHOLDER_COLOR,
   },
-  option: {
-    height: 48,
-    paddingHorizontal: 16,
-    fontWeight: "400",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "100%",
-  },
-  optionText: {
-    fontSize: 16,
-    color: TEXT_COLOR,
+  icon: {
+    marginLeft: 7,
+    top: 1,
   },
 });
 
