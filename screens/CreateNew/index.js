@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import FieldGroup from "../../components/FieldGroup";
 import Select from "../../components/Select";
+import TextButton from "../../components/TextButton";
 import TextInput from "../../components/TextInput";
 import {
   addCounter,
@@ -31,14 +32,19 @@ class CreateNew extends PureComponent {
     return {
       headerTitle: "Add new",
       headerRight: (
-        <Button
-          onPress={navigation.getParam("saveAndHide", noop)}
+        <TextButton
+          onPress={navigation.getParam("onPressSaveButton", noop)}
+          disabled={navigation.getParam("saveButtonDisabled", true)}
           title="Save"
           color={BRAND_PRIMARY}
         />
       ),
       headerLeft: (
-        <Button onPress={() => navigation.navigate("Main")} title="Cancel" color={BRAND_PRIMARY} />
+        <TextButton
+          onPress={() => navigation.navigate("Main")}
+          title="Cancel"
+          color={BRAND_PRIMARY}
+        />
       ),
     };
   };
@@ -71,7 +77,15 @@ class CreateNew extends PureComponent {
   };
 
   componentDidMount() {
-    this.props.navigation.setParams({ saveAndHide: this.saveAndHide });
+    this.props.navigation.setParams({ onPressSaveButton: this.saveAndHide });
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.name !== this.state.name) {
+      this.props.navigation.setParams({
+        saveButtonDisabled: this.state.name.length === 0,
+      });
+    }
   }
 
   _navigateToResetFrequency = () => {
