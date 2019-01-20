@@ -1,4 +1,4 @@
-import { GestureHandler } from "expo";
+import { GestureHandler, Haptic } from "expo";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { ImageBackground, Text, View } from "react-native";
@@ -17,8 +17,8 @@ const interpolateIconSize = x => {
   return x
     .interpolate({
       map: Math.abs,
-      range: [10, 80],
-      output: [26, 40],
+      range: [20, 80],
+      output: [26, 48],
       extrapolate: "clamp",
     })
     .interpolate(x => parseInt(x, 10));
@@ -30,6 +30,7 @@ export class CounterListItem extends Component {
   state = {
     down: false,
     deltaX: 0,
+    notified: false,
   };
 
   static propTypes = {
@@ -56,6 +57,10 @@ export class CounterListItem extends Component {
 
   _onPanGestureEvent = ({ nativeEvent }) => {
     const deltaX = nativeEvent.translationX;
+    if (!this.state.notified && Math.abs(deltaX) >= THRESHOLD) {
+      Haptic.selection();
+      this.setState({ notified: true });
+    }
     const cappedDeltaX = Math.min(THRESHOLD, Math.abs(deltaX)) * (deltaX < 0 ? -1 : 1);
     this.setState({
       deltaX: cappedDeltaX,
@@ -77,6 +82,7 @@ export class CounterListItem extends Component {
       return {
         down: eventState === State.ACTIVE,
         deltaX: eventState === State.BEGAN ? 0 : state.deltaX,
+        notified: eventState === State.BEGAN ? false : state.notified,
       };
     });
   };
