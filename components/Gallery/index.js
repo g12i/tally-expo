@@ -1,3 +1,4 @@
+import { BlurView } from "expo";
 import chunk from "lodash/chunk";
 import noop from "lodash/noop";
 import PropTypes from "prop-types";
@@ -73,6 +74,9 @@ class Gallery extends PureComponent {
               }}
               source={{ uri: item.uri }}
             />
+            <BlurView tint="dark" intensity={80} style={styles.author}>
+              <Text style={{ color: TEXT_COLOR }}>{item.author}</Text>
+            </BlurView>
             {isSelected && (
               <View style={styles.selectedWrapper}>
                 <Icon name="checkmark-circle-outline" size={40} color={TEXT_COLOR} />
@@ -80,7 +84,6 @@ class Gallery extends PureComponent {
               </View>
             )}
           </View>
-          <Text style={{ color: TEXT_COLOR }}>{item.author}</Text>
         </Touchable>
       </View>
     );

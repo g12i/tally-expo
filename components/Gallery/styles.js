@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   selectedWrapper: {
+    borderRadius: 5,
     position: "absolute",
     width: "100%",
     height: "100%",
@@ -27,6 +28,18 @@ const styles = StyleSheet.create({
   selectedText: {
     color: TEXT_COLOR,
     fontSize: 16,
+  },
+  author: {
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: "auto",
+    paddingVertical: 8,
+    paddingHorizontal: 4,
   },
 });
 
