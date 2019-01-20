@@ -137,7 +137,7 @@ class CreateNew extends PureComponent {
     return (
       <View style={styles.container}>
         <FieldGroup marginBottom={2} marginTop={1}>
-          <TextInput placeholder="Name" onChangeText={this._setName} />
+          <TextInput value={this.state.name} placeholder="Name" onChangeText={this._setName} />
         </FieldGroup>
         <FieldGroup>
           <Select
