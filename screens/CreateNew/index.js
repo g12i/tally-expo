@@ -30,7 +30,13 @@ class CreateNew extends PureComponent {
   static navigationOptions = ({ navigation }) => {
     return {
       headerTitle: "Add new",
-      headerRight: <Button onPress={() => {}} title="Save" color={BRAND_PRIMARY} />,
+      headerRight: (
+        <Button
+          onPress={navigation.getParam("saveAndHide", noop)}
+          title="Save"
+          color={BRAND_PRIMARY}
+        />
+      ),
       headerLeft: (
         <Button onPress={() => navigation.navigate("Main")} title="Cancel" color={BRAND_PRIMARY} />
       ),
@@ -41,8 +47,8 @@ class CreateNew extends PureComponent {
     addCounter: PropTypes.func,
     navigation: PropTypes.shape({
       getParam: PropTypes.func,
-      goBack: PropTypes.func,
       navigate: PropTypes.func,
+      setParams: PropTypes.func,
     }),
   };
 
@@ -50,8 +56,8 @@ class CreateNew extends PureComponent {
     addCounter: noop,
     navigation: {
       getParam: noop,
-      goBack: noop,
       navigate: noop,
+      setParams: noop,
     },
   };
 
@@ -63,6 +69,10 @@ class CreateNew extends PureComponent {
       uri: "",
     },
   };
+
+  componentDidMount() {
+    this.props.navigation.setParams({ saveAndHide: this.saveAndHide });
+  }
 
   _navigateToResetFrequency = () => {
     this.props.navigation.navigate("ChooseResetFrequency", {
@@ -84,16 +94,13 @@ class CreateNew extends PureComponent {
   _setBackground = background => this.setState({ background });
 
   saveAndHide = async () => {
-    this.setState({ backgroundSync: true });
-    const backgroundUrl = await fetch("https://source.unsplash.com/random").then(
-      response => response.url
-    );
-    this.setState({ backgroundSync: false });
+    if (!this.state.name) return;
     this.props.addCounter({
       name: this.state.name,
-      background: backgroundUrl,
+      background: this.state.background,
       reset: this.state.reset,
     });
+    this.props.navigation.navigate("Main");
   };
 
   renderBackgroundPreview = () => {
