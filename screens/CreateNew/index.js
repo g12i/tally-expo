@@ -1,7 +1,7 @@
 import noop from "lodash/noop";
 import PropTypes from "prop-types";
 import React, { PureComponent } from "react";
-import { Button, ImageBackground, View } from "react-native";
+import { ImageBackground, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import FieldGroup from "../../components/FieldGroup";
@@ -17,6 +17,7 @@ import {
   RESET_YEARLY,
 } from "../../reducers/counters";
 import { BRAND_PRIMARY } from "../../theme";
+import { triggerDownload } from "../../utils/unsplash";
 import styles from "./styles";
 
 const ResetLabels = {
@@ -114,6 +115,9 @@ class CreateNew extends PureComponent {
       background: this.state.background,
       reset: this.state.reset,
     });
+    if (this.state.background.id) {
+      triggerDownload(this.state.background.id);
+    }
     this.props.navigation.navigate("Main");
   };
 

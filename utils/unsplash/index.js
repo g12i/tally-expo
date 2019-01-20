@@ -28,3 +28,10 @@ export const getRandomPhotos = () => {
     isLastPage: true,
   }));
 };
+
+export const triggerDownload = id => {
+  return call(`/photos/${id}/download`).catch(err => {
+    console.log(`Error marking photo as downloaded`);
+    console.log(err);
+  });
+};
