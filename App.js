@@ -8,11 +8,38 @@ import ChooseResetFrequency from "./screens/ChooseResetFrequency";
 import CreateNew from "./screens/CreateNew";
 import HomeScreen from "./screens/HomePage";
 import { BACKGROUND_COLOR, BORDER_COLOR, TEXT_COLOR } from "./theme";
+import Edit from "./screens/Edit";
 
 const CreateNewStack = createStackNavigator(
   {
     CreateNewHome: {
       screen: CreateNew,
+    },
+    ChooseResetFrequency: {
+      screen: ChooseResetFrequency,
+    },
+    ChooseBackground: {
+      screen: ChooseBackground,
+    },
+  },
+  {
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: BACKGROUND_COLOR,
+        borderBottomColor: BORDER_COLOR,
+      },
+      headerTintColor: TEXT_COLOR,
+      headerTitleStyle: {
+        fontWeight: "600",
+      },
+    },
+  }
+);
+
+const EditStack = createStackNavigator(
+  {
+    EditHome: {
+      screen: Edit,
     },
     ChooseResetFrequency: {
       screen: ChooseResetFrequency,
@@ -62,6 +89,9 @@ const RootStack = createStackNavigator(
     },
     CreateNew: {
       screen: CreateNewStack,
+    },
+    Edit: {
+      screen: EditStack,
     },
   },
   {
