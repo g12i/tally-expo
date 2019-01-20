@@ -1,19 +1,13 @@
 import React, { Component } from "react";
-import { createStore } from "redux";
+import { createAppContainer, createStackNavigator } from "react-navigation";
 import { Provider } from "react-redux";
-import { createStackNavigator, createAppContainer } from "react-navigation";
-import { BACKGROUND_COLOR, TEXT_COLOR, BORDER_COLOR } from "./theme";
-
-import rootReducer from "./reducers";
-
 import StatusBar from "./components/StatusBar";
-
-import HomeScreen from "./screens/HomePage";
-import CreateNew from "./screens/CreateNew";
+import createStore from "./createStore";
 import ChooseBackground from "./screens/ChooseBackground";
 import ChooseResetFrequency from "./screens/ChooseResetFrequency";
-
-const store = createStore(rootReducer);
+import CreateNew from "./screens/CreateNew";
+import HomeScreen from "./screens/HomePage";
+import { BACKGROUND_COLOR, BORDER_COLOR, TEXT_COLOR } from "./theme";
 
 const CreateNewStack = createStackNavigator(
   {
@@ -79,9 +73,10 @@ const RootStack = createStackNavigator(
 const AppContainer = createAppContainer(RootStack);
 
 export default class App extends Component {
+  store = createStore();
   render() {
     return (
-      <Provider store={store}>
+      <Provider store={this.store}>
         <StatusBar backgroundColor={BACKGROUND_COLOR} barStyle="light-content" />
         <AppContainer />
       </Provider>
