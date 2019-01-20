@@ -19,27 +19,7 @@ export const removeCounter = id => ({
   payload: { id },
 });
 
-// const initialState = [];
-const initialState = [
-  {
-    id: "1",
-    name: "Exercise",
-    background: {
-      uri:
-        "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-      id: "I9YP-CFz_fg",
-    },
-  },
-  {
-    id: "2",
-    name: "Stop sweets",
-    background: {
-      uri:
-        "https://images.unsplash.com/photo-1527515545081-5db817172677?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQ5NzQ2fQ",
-      id: "13213-asd",
-    },
-  },
-];
+const initialState = [];
 
 export default function(state = initialState, action) {
   switch (action.type) {
