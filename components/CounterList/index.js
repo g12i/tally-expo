@@ -37,8 +37,8 @@ class CounterList extends PureComponent {
       <FlatList
         data={counters}
         keyExtractor={this._keyExtractor}
-        renderItem={({ item }, i) => (
-          <CounterListItem {...item} inEditMode={inEditMode} index={i} />
+        renderItem={({ item, index }) => (
+          <CounterListItem {...item} inEditMode={inEditMode} index={index} />
         )}
         style={{ backgroundColor: BACKGROUND_COLOR }}
       />
