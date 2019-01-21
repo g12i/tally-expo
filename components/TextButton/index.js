@@ -1,10 +1,12 @@
+import { GestureHandler } from "expo";
 import noop from "lodash/noop";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Platform, Text, View } from "react-native";
 import Icon from "../Icon";
-import Touchable from "../Touchable";
 import styles from "./styles";
+
+const { BorderlessButton } = GestureHandler;
 
 class TextButton extends Component {
   static propTypes = {
@@ -31,7 +33,7 @@ class TextButton extends Component {
     }
     const formattedTitle = Platform.OS === "android" && title ? title.toUpperCase() : title;
     return (
-      <Touchable
+      <BorderlessButton
         accessibilityLabel={accessibilityLabel}
         accessibilityRole="button"
         accessibilityStates={accessibilityStates}
@@ -47,7 +49,7 @@ class TextButton extends Component {
             </Text>
           )}
         </View>
-      </Touchable>
+      </BorderlessButton>
     );
   }
 }
