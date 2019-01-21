@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { animated, Spring } from "react-spring/native";
 import { compose } from "redux";
 import { decrement, increment } from "../../reducers/transitions";
+import { TEXT_COLOR } from "../../theme";
 import Icon from "../Icon";
 import styles from "./styles";
 
@@ -42,6 +43,7 @@ export class CounterListItem extends Component {
     decrement: PropTypes.func,
     id: PropTypes.string.isRequired,
     increment: PropTypes.func,
+    inEditMode: PropTypes.bool,
     name: PropTypes.string.isRequired,
   };
 
@@ -53,9 +55,13 @@ export class CounterListItem extends Component {
     count: 0,
     decrement: () => {},
     increment: () => {},
+    inEditMode: false,
   };
 
   _onPanGestureEvent = ({ nativeEvent }) => {
+    if (this.props.inEditMode) {
+      return;
+    }
     const deltaX = nativeEvent.translationX;
     if (!this.state.notified && Math.abs(deltaX) >= THRESHOLD) {
       Haptic.selection();
@@ -68,6 +74,9 @@ export class CounterListItem extends Component {
   };
 
   _onHandlerStateChange = ({ nativeEvent }) => {
+    if (this.props.inEditMode) {
+      return;
+    }
     const eventState = nativeEvent.state;
     this.setState(state => {
       if (eventState === State.END) {
@@ -108,7 +117,7 @@ export class CounterListItem extends Component {
   });
 
   render() {
-    const { background, count, name } = this.props;
+    const { background, count, name, inEditMode } = this.props;
     const { deltaX, down } = this.state;
     return (
       <PanGestureHandler
@@ -135,7 +144,11 @@ export class CounterListItem extends Component {
                   <View style={styles.backgroundMask} />
                   <View style={styles.content}>
                     <Text style={styles.nameText}>{name}</Text>
-                    <Text style={styles.counterText}>{count}</Text>
+                    {inEditMode ? (
+                      <Icon name="arrow-forward" size={32} color={TEXT_COLOR} />
+                    ) : (
+                      <Text style={styles.counterText}>{count}</Text>
+                    )}
                   </View>
                 </AnimatedView>
               </React.Fragment>

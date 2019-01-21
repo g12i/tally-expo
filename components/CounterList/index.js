@@ -19,23 +19,25 @@ class CounterList extends PureComponent {
         count: PropTypes.number.isRequired,
       })
     ),
+    inEditMode: PropTypes.bool,
     removeCounter: PropTypes.func,
   };
 
   static defaultProps = {
     counters: [],
+    inEditMode: false,
     removeCounter: () => {},
   };
 
   _keyExtractor = item => item.id;
 
   render() {
-    const { counters } = this.props;
+    const { counters, inEditMode } = this.props;
     return (
       <FlatList
         data={counters}
         keyExtractor={this._keyExtractor}
-        renderItem={({ item }) => <CounterListItem {...item} />}
+        renderItem={({ item }) => <CounterListItem {...item} inEditMode={inEditMode} />}
         style={{ backgroundColor: BACKGROUND_COLOR }}
       />
     );
