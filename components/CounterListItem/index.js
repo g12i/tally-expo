@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { ImageBackground, Text, View } from "react-native";
 import { connect } from "react-redux";
-import { animated, Spring, Transition } from "react-spring/native";
+import { animated, Spring } from "react-spring/native";
 import { compose } from "redux";
 import { decrement, increment } from "../../reducers/transitions";
-import { TEXT_COLOR } from "../../theme";
 import Icon from "../Icon";
+import Touchable from "../Touchable/index";
 import styles from "./styles";
 
 const { State, PanGestureHandler } = GestureHandler;
@@ -118,46 +118,66 @@ export class CounterListItem extends Component {
   });
 
   renderContent = () => {
-    const { background, count, name } = this.props;
+    const { background, count, name, inEditMode } = this.props;
     return (
       <View style={styles.contentContainer}>
         <View style={styles.backgroundMock} />
         <ImageBackground source={{ uri: background.uri }} style={styles.background} />
         <View style={styles.backgroundMask} />
         <View style={styles.content}>
-          <Text style={styles.nameText}>{name}</Text>
+          <Spring
+            native
+            from={{ x: inEditMode ? 0 : 20 }}
+            to={{ x: inEditMode ? 20 : 0 }}
+            delay={this.props.index * 80}
+            immediate={false}
+          >
+            {({ x }) => (
+              <AnimatedView style={{ transform: [{ translateX: x }] }}>
+                <Text style={styles.nameText}>{name}</Text>
+              </AnimatedView>
+            )}
+          </Spring>
           <Text style={styles.counterText}>{count}</Text>
         </View>
       </View>
     );
   };
 
-  render() {
-    const { deltaX, down } = this.state;
-    return (
+  wrapWithInteractionHandler = children => {
+    return this.props.inEditMode ? (
+      <Touchable>{children}</Touchable>
+    ) : (
       <PanGestureHandler
         minDeltaX={10}
         onGestureEvent={this._onPanGestureEvent}
         onHandlerStateChange={this._onHandlerStateChange}
       >
-        <View style={styles.container}>
-          <Spring
-            native
-            to={{ x: down ? deltaX : 0 }}
-            immediate={propName => down && propName === "x"}
-          >
-            {({ x }) => (
-              <React.Fragment>
-                {this.renderLeftAction(x)}
-                {this.renderRightAction(x)}
-                <AnimatedView style={{ transform: [{ translateX: x }] }}>
-                  {this.renderContent()}
-                </AnimatedView>
-              </React.Fragment>
-            )}
-          </Spring>
-        </View>
+        {children}
       </PanGestureHandler>
+    );
+  };
+
+  render() {
+    const { deltaX, down } = this.state;
+    return this.wrapWithInteractionHandler(
+      <View style={styles.container}>
+        <Spring
+          native
+          to={{ x: down ? deltaX : 0 }}
+          immediate={propName => down && propName === "x"}
+        >
+          {({ x }) => (
+            <React.Fragment>
+              {this.renderLeftAction(x)}
+              {this.renderRightAction(x)}
+              <AnimatedView style={{ transform: [{ translateX: x }] }}>
+                {this.renderContent()}
+              </AnimatedView>
+            </React.Fragment>
+          )}
+        </Spring>
+      </View>
     );
   }
 }
