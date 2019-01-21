@@ -1,3 +1,4 @@
+import noop from "lodash/noop";
 import PropTypes from "prop-types";
 import React, { PureComponent } from "react";
 import { FlatList } from "react-native";
@@ -20,16 +21,20 @@ class CounterList extends PureComponent {
       })
     ),
     inEditMode: PropTypes.bool,
+    onPressItem: PropTypes.func,
     removeCounter: PropTypes.func,
   };
 
   static defaultProps = {
     counters: [],
     inEditMode: false,
-    removeCounter: () => {},
+    onPressItem: noop,
+    removeCounter: noop,
   };
 
   _keyExtractor = item => item.id;
+
+  _onPressItem = id => this.props.onPressItem(id);
 
   render() {
     const { counters, inEditMode } = this.props;
@@ -38,7 +43,12 @@ class CounterList extends PureComponent {
         data={counters}
         keyExtractor={this._keyExtractor}
         renderItem={({ item, index }) => (
-          <CounterListItem {...item} inEditMode={inEditMode} index={index} />
+          <CounterListItem
+            {...item}
+            index={index}
+            inEditMode={inEditMode}
+            onPress={this._onPressItem}
+          />
         )}
         style={{ backgroundColor: BACKGROUND_COLOR }}
       />

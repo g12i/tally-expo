@@ -55,14 +55,13 @@ class HomeScreen extends PureComponent {
   }
 
   _toggleEditMode = () => this.setState(state => ({ inEditMode: !state.inEditMode }));
-  _navigateToEdit = () => {
-    this.props.navigation.navigate("Edit", {
-      id: "5600d0b5-9d40-463a-90bb-1fd40aaa6a2a",
-    });
+
+  _navigateToEdit = id => {
+    this.props.navigation.navigate("Edit", { id });
   };
 
   render() {
-    return <CounterList inEditMode={this.state.inEditMode} />;
+    return <CounterList inEditMode={this.state.inEditMode} onPressItem={this._navigateToEdit} />;
   }
 }
 

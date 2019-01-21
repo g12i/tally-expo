@@ -1,9 +1,10 @@
 import { GestureHandler, Haptic } from "expo";
+import noop from "lodash/noop";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { ImageBackground, Text, View } from "react-native";
 import { connect } from "react-redux";
-import { animated, Spring } from "react-spring/native";
+import { animated, Spring, Transition } from "react-spring/native";
 import { compose } from "redux";
 import { decrement, increment } from "../../reducers/transitions";
 import Icon from "../Icon";
@@ -46,6 +47,7 @@ export class CounterListItem extends Component {
     index: PropTypes.number.isRequired,
     inEditMode: PropTypes.bool,
     name: PropTypes.string.isRequired,
+    onPress: PropTypes.func,
   };
 
   static defaultProps = {
@@ -54,15 +56,13 @@ export class CounterListItem extends Component {
       uri: "",
     },
     count: 0,
-    decrement: () => {},
-    increment: () => {},
+    decrement: noop,
+    increment: noop,
     inEditMode: false,
+    onPress: noop,
   };
 
   _onPanGestureEvent = ({ nativeEvent }) => {
-    if (this.props.inEditMode) {
-      return;
-    }
     const deltaX = nativeEvent.translationX;
     if (!this.state.notified && Math.abs(deltaX) >= THRESHOLD) {
       Haptic.selection();
@@ -75,9 +75,6 @@ export class CounterListItem extends Component {
   };
 
   _onHandlerStateChange = ({ nativeEvent }) => {
-    if (this.props.inEditMode) {
-      return;
-    }
     const eventState = nativeEvent.state;
     this.setState(state => {
       if (eventState === State.END) {
@@ -95,6 +92,11 @@ export class CounterListItem extends Component {
         notified: eventState === State.BEGAN ? false : state.notified,
       };
     });
+  };
+
+  _onPressItem = () => {
+    if (!this.props.inEditMode) return;
+    this.props.onPress(this.props.id);
   };
 
   renderAction = ({ icon, backgroundColor, left = "auto", right = "auto" }) => x => {
@@ -125,59 +127,65 @@ export class CounterListItem extends Component {
         <ImageBackground source={{ uri: background.uri }} style={styles.background} />
         <View style={styles.backgroundMask} />
         <View style={styles.content}>
-          <Spring
-            native
-            from={{ x: inEditMode ? 0 : 20 }}
-            to={{ x: inEditMode ? 20 : 0 }}
-            delay={this.props.index * 80}
-            immediate={false}
+          <Text style={styles.nameText}>{name}</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              position: "relative",
+            }}
           >
-            {({ x }) => (
-              <AnimatedView style={{ transform: [{ translateX: x }] }}>
-                <Text style={styles.nameText}>{name}</Text>
-              </AnimatedView>
-            )}
-          </Spring>
-          <Text style={styles.counterText}>{count}</Text>
+            <Transition
+              items={inEditMode}
+              from={{ position: "absolute", opacity: 0, x: 50 }}
+              enter={{ opacity: 1, x: 0 }}
+              leave={{ opacity: 0, x: 50 }}
+              delay={this.props.index * 80}
+            >
+              {isInEditMode => ({ x, ...props }) => (
+                <AnimatedView style={[props, { transform: [{ translateX: x }] }]}>
+                  <Text style={styles.counterText}>
+                    {isInEditMode ? <Icon name="arrow-forward" size={22} /> : <Text>{count}</Text>}
+                  </Text>
+                </AnimatedView>
+              )}
+            </Transition>
+          </View>
         </View>
       </View>
     );
   };
 
-  wrapWithInteractionHandler = children => {
-    return this.props.inEditMode ? (
-      <Touchable>{children}</Touchable>
-    ) : (
+  render() {
+    const { deltaX, down } = this.state;
+    return (
       <PanGestureHandler
+        enabled={!this.props.inEditMode}
         minDeltaX={10}
         onGestureEvent={this._onPanGestureEvent}
         onHandlerStateChange={this._onHandlerStateChange}
       >
-        {children}
+        <Touchable onPress={this._onPressItem}>
+          <View style={styles.container}>
+            <Spring
+              native
+              to={{ x: down ? deltaX : 0 }}
+              immediate={propName => down && propName === "x"}
+            >
+              {({ x }) => (
+                <React.Fragment>
+                  {this.renderLeftAction(x)}
+                  {this.renderRightAction(x)}
+                  <AnimatedView style={{ transform: [{ translateX: x }] }}>
+                    {this.renderContent()}
+                  </AnimatedView>
+                </React.Fragment>
+              )}
+            </Spring>
+          </View>
+        </Touchable>
       </PanGestureHandler>
-    );
-  };
-
-  render() {
-    const { deltaX, down } = this.state;
-    return this.wrapWithInteractionHandler(
-      <View style={styles.container}>
-        <Spring
-          native
-          to={{ x: down ? deltaX : 0 }}
-          immediate={propName => down && propName === "x"}
-        >
-          {({ x }) => (
-            <React.Fragment>
-              {this.renderLeftAction(x)}
-              {this.renderRightAction(x)}
-              <AnimatedView style={{ transform: [{ translateX: x }] }}>
-                {this.renderContent()}
-              </AnimatedView>
-            </React.Fragment>
-          )}
-        </Spring>
-      </View>
     );
   }
 }
