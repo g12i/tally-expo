@@ -9,7 +9,10 @@ const styles = StyleSheet.create({
     borderBottomColor: BORDER_COLOR,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  item: {},
+  item: {
+    height: 48,
+    justifyContent: "center",
+  },
   separator: {
     height: StyleSheet.hairlineWidth,
     width: "100%",
