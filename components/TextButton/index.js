@@ -10,6 +10,7 @@ const { BorderlessButton } = GestureHandler;
 
 class TextButton extends Component {
   static propTypes = {
+    color: PropTypes.string,
     accessibilityLabel: PropTypes.string,
     onPress: PropTypes.func.isRequired,
     title: PropTypes.string,
@@ -22,7 +23,7 @@ class TextButton extends Component {
   };
 
   render() {
-    const { accessibilityLabel, onPress, title, icon, disabled } = this.props;
+    const { accessibilityLabel, color, onPress, title, icon, disabled } = this.props;
     const buttonStyles = [styles.button];
     const textStyles = [styles.text];
     const accessibilityStates = [];
@@ -30,6 +31,9 @@ class TextButton extends Component {
       buttonStyles.push(styles.buttonDisabled);
       textStyles.push(styles.textDisabled);
       accessibilityStates.push("disabled");
+    }
+    if (color) {
+      textStyles.push({ color });
     }
     const formattedTitle = Platform.OS === "android" && title ? title.toUpperCase() : title;
     return (
@@ -41,7 +45,7 @@ class TextButton extends Component {
         onPress={disabled ? noop : onPress}
       >
         <View style={buttonStyles}>
-          {icon && <Icon name={icon} color={styles.text.color} size={28} />}
+          {icon && <Icon name={icon} color={color ? color : styles.text.color} size={28} />}
           {title && (
             <Text style={textStyles} disabled={disabled}>
               {icon && " "}
