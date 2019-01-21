@@ -9,6 +9,7 @@ import Select from "../../components/Select";
 import TextButton from "../../components/TextButton";
 import TextInput from "../../components/TextInput";
 import {
+  removeCounter,
   RESET_DAILY,
   RESET_MONTHLY,
   RESET_NEVER,
@@ -65,6 +66,7 @@ class Edit extends PureComponent {
       setParams: PropTypes.func,
     }),
     updateCounter: PropTypes.func,
+    removeCounter: PropTypes.func,
   };
 
   static defaultProps = {
@@ -75,6 +77,7 @@ class Edit extends PureComponent {
       setParams: noop,
     },
     updateCounter: noop,
+    removeCounter: noop,
   };
 
   constructor(props) {
@@ -87,7 +90,7 @@ class Edit extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.navigation.setParams({ onPressUpdateButton: this.updateAndHide });
+    this.props.navigation.setParams({ onPressUpdateButton: this.onPressUpdate });
   }
 
   componentDidUpdate(_, prevState) {
@@ -117,7 +120,12 @@ class Edit extends PureComponent {
   _setReset = reset => this.setState({ reset });
   _setBackground = background => this.setState({ background });
 
-  updateAndHide = async () => {
+  onPressRemove = () => {
+    this.props.removeCounter(this.props.counter.id);
+    this.props.navigation.navigate("Main");
+  };
+
+  onPressUpdate = async () => {
     if (!this.state.name) return;
     this.props.updateCounter(this.props.counter.id, {
       name: this.state.name,
@@ -145,7 +153,7 @@ class Edit extends PureComponent {
         <FieldGroup marginBottom={2} marginTop={1}>
           <TextInput value={this.state.name} placeholder="Name" onChangeText={this._setName} />
         </FieldGroup>
-        <FieldGroup>
+        <FieldGroup marginBottom={2}>
           <Select
             label="Reset"
             value={ResetLabels[this.state.reset]}
@@ -157,6 +165,11 @@ class Edit extends PureComponent {
             onPress={this._navigateToBackgroundChoice}
           />
         </FieldGroup>
+        <FieldGroup>
+          <View style={{ alignItems: "center" }}>
+            <TextButton title="Delete counter" onPress={this.onPressRemove} color={"#FF1C68"} />
+          </View>
+        </FieldGroup>
       </View>
     );
   }
@@ -167,5 +180,5 @@ export default connect(
     const id = navigation.getParam("id", null);
     return { counter: counters.find(counter => counter.id === id) };
   },
-  dispatch => bindActionCreators({ updateCounter }, dispatch)
+  dispatch => bindActionCreators({ removeCounter, updateCounter }, dispatch)
 )(Edit);

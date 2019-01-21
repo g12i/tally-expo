@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
     height: 26,
     borderRadius: 2,
   },
+  removeButton: {
+    color: "red",
+  },
 });
 
 export default styles;
