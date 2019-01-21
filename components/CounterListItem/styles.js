@@ -5,19 +5,18 @@ const styles = StyleSheet.create({
   container: {
     position: "relative",
   },
-  background: {
-    width: "100%",
+  contentContainer: {
     height: 85,
-    display: "flex",
-    alignItems: "center",
-    textAlign: "center",
+  },
+  background: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
   },
   backgroundMock: {
+    position: "absolute",
     width: "100%",
-    height: 85,
-    display: "flex",
-    alignItems: "center",
-    textAlign: "center",
+    height: "100%",
     backgroundColor: "#232931",
   },
   backgroundMask: {

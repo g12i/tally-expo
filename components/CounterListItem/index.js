@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { ImageBackground, Text, View } from "react-native";
 import { connect } from "react-redux";
-import { animated, Spring } from "react-spring/native";
+import { animated, Spring, Transition } from "react-spring/native";
 import { compose } from "redux";
 import { decrement, increment } from "../../reducers/transitions";
 import { TEXT_COLOR } from "../../theme";
@@ -43,6 +43,7 @@ export class CounterListItem extends Component {
     decrement: PropTypes.func,
     id: PropTypes.string.isRequired,
     increment: PropTypes.func,
+    index: PropTypes.number.isRequired,
     inEditMode: PropTypes.bool,
     name: PropTypes.string.isRequired,
   };
@@ -116,8 +117,22 @@ export class CounterListItem extends Component {
     right: 0,
   });
 
+  renderContent = () => {
+    const { background, count, name } = this.props;
+    return (
+      <View style={styles.contentContainer}>
+        <View style={styles.backgroundMock} />
+        <ImageBackground source={{ uri: background.uri }} style={styles.background} />
+        <View style={styles.backgroundMask} />
+        <View style={styles.content}>
+          <Text style={styles.nameText}>{name}</Text>
+          <Text style={styles.counterText}>{count}</Text>
+        </View>
+      </View>
+    );
+  };
+
   render() {
-    const { background, count, name, inEditMode } = this.props;
     const { deltaX, down } = this.state;
     return (
       <PanGestureHandler
@@ -136,20 +151,7 @@ export class CounterListItem extends Component {
                 {this.renderLeftAction(x)}
                 {this.renderRightAction(x)}
                 <AnimatedView style={{ transform: [{ translateX: x }] }}>
-                  {background.uri ? (
-                    <ImageBackground source={{ uri: background.uri }} style={styles.background} />
-                  ) : (
-                    <View style={styles.backgroundMock} />
-                  )}
-                  <View style={styles.backgroundMask} />
-                  <View style={styles.content}>
-                    <Text style={styles.nameText}>{name}</Text>
-                    {inEditMode ? (
-                      <Icon name="arrow-forward" size={32} color={TEXT_COLOR} />
-                    ) : (
-                      <Text style={styles.counterText}>{count}</Text>
-                    )}
-                  </View>
+                  {this.renderContent()}
                 </AnimatedView>
               </React.Fragment>
             )}
