@@ -18,7 +18,7 @@ class HomeScreen extends PureComponent {
       ),
       headerLeft: (
         <TextButton
-          title={navigation.getParam("inEditMode", false) ? "Edit" : "Ready"}
+          title={navigation.getParam("inEditMode", false) ? "Ready" : "Edit"}
           onPress={navigation.getParam("onPressEditButton", noop)}
         />
       ),
