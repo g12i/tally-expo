@@ -17,7 +17,10 @@ class HomeScreen extends PureComponent {
         />
       ),
       headerLeft: (
-        <TextButton title="Edit" onPress={navigation.getParam("onPressEditButton", noop)} />
+        <TextButton
+          title={navigation.getParam("inEditMode", false) ? "Edit" : "Ready"}
+          onPress={navigation.getParam("onPressEditButton", noop)}
+        />
       ),
     };
   };
@@ -43,6 +46,12 @@ class HomeScreen extends PureComponent {
 
   componentDidMount() {
     this.props.navigation.setParams({ onPressEditButton: this._toggleEditMode });
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.inEditMode !== this.state.inEditMode) {
+      this.props.navigation.setParams({ inEditMode: this.state.inEditMode });
+    }
   }
 
   _toggleEditMode = () => this.setState(state => ({ inEditMode: !state.inEditMode }));
