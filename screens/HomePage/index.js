@@ -26,6 +26,7 @@ class HomeScreen extends PureComponent {
   };
   static propTypes = {
     navigation: PropTypes.shape({
+      addListener: PropTypes.func,
       getParam: PropTypes.func,
       navigate: PropTypes.func,
       setParams: PropTypes.func,
@@ -34,6 +35,7 @@ class HomeScreen extends PureComponent {
 
   static defaultProps = {
     navigation: {
+      addListener: noop,
       getParam: noop,
       navigate: noop,
       setParams: noop,
@@ -46,6 +48,13 @@ class HomeScreen extends PureComponent {
 
   componentDidMount() {
     this.props.navigation.setParams({ onPressEditButton: this._toggleEditMode });
+    this.navigationDidBlurSubscription = this.props.navigation.addListener("didBlur", () => {
+      this.setState({ inEditMode: false });
+    });
+  }
+
+  componentWillUnmount() {
+    this.navigationDidBlurSubscription.remove();
   }
 
   componentDidUpdate(_, prevState) {
