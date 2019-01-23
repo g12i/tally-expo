@@ -148,7 +148,7 @@ export class CounterListItem extends Component {
                 from={{ position: "absolute", opacity: 0, x: 50 }}
                 enter={{ opacity: 1, x: 0 }}
                 leave={{ opacity: 0, x: 50 }}
-                delay={this.props.index * 120}
+                delay={this.props.index * 80}
               >
                 {isInEditMode => ({ x, ...props }) => (
                   <AnimatedView style={[props, { transform: [{ translateX: x }] }]}>
