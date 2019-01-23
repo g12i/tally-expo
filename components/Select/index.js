@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import React, { PureComponent } from "react";
 import { Text, View } from "react-native";
 import Icon from "../Icon";
-import Touchable from "../Touchable";
+import { Touchable } from "../Touchable";
 import styles from "./styles";
 
 class Select extends PureComponent {
