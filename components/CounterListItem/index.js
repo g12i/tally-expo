@@ -10,7 +10,6 @@ import { decrement, increment } from "../../reducers/transitions";
 import Icon from "../Icon";
 import { Touchable } from "../Touchable";
 import styles from "./styles";
-import Touchable from "../Touchable/index";
 
 const { State, PanGestureHandler } = GestureHandler;
 const AnimatedView = animated(View);
