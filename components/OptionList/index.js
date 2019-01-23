@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { FlatList, View, Text } from "react-native";
 import styles from "./styles";
 import { BRAND_PRIMARY } from "../../theme";
-import Touchable from "../Touchable";
+import { Touchable } from "../Touchable";
 import Icon from "../Icon";
 
 class OptionList extends PureComponent {

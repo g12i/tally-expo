@@ -6,7 +6,7 @@ import React, { PureComponent } from "react";
 import { ActivityIndicator, FlatList, ImageBackground, Text, View } from "react-native";
 import { TEXT_COLOR } from "../../theme";
 import Icon from "../Icon";
-import Touchable from "../Touchable";
+import { Touchable } from "../Touchable";
 import styles from "./styles";
 
 class Gallery extends PureComponent {

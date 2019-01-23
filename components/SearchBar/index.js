@@ -3,7 +3,7 @@ import { View, TextInput as NativeTextInput } from "react-native";
 import { Transition, animated } from "react-spring/native";
 
 import styles from "./styles";
-import Touchable from "../Touchable";
+import { TouchableText } from "../Touchable";
 import Icon from "../Icon";
 
 const AnimatedView = animated(View);
@@ -41,9 +41,9 @@ class SearchBar extends PureComponent {
               show &&
               (props => (
                 <AnimatedView style={props}>
-                  <Touchable style={styles.clearIconTouchable} onPress={this._clear}>
+                  <TouchableText style={styles.clearIconTouchable} onPress={this._clear}>
                     <Icon name="close-circle" style={styles.clearIcon} size={20} />
-                  </Touchable>
+                  </TouchableText>
                 </AnimatedView>
               ))
             }

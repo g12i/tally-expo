@@ -1,7 +1,7 @@
 import { GestureHandler } from "expo";
 
-const { RectButton } = GestureHandler;
+const { BaseButton, RectButton, BorderlessButton } = GestureHandler;
 
-const Touchable = RectButton;
-
-export default Touchable;
+export const TouchableBase = BaseButton;
+export const Touchable = RectButton;
+export const TouchableText = BorderlessButton;
