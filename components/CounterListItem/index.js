@@ -65,7 +65,12 @@ export class CounterListItem extends Component {
   _onPanGestureEvent = ({ nativeEvent }) => {
     const deltaX = nativeEvent.translationX;
     if (!this.state.notified && Math.abs(deltaX) >= THRESHOLD) {
-      Platform.OS === "android" ? Vibration.vibrate(100) : Haptic.selection();
+      if (Platform.OS === "ios") {
+        // @todo - add additional checks
+        Haptic.selection();
+      } else {
+        Vibration.vibrate(50);
+      }
       this.setState({ notified: true });
     }
     const cappedDeltaX = Math.min(THRESHOLD, Math.abs(deltaX)) * (deltaX < 0 ? -1 : 1);
