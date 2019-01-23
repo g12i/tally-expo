@@ -2,7 +2,7 @@ import { GestureHandler, Haptic } from "expo";
 import noop from "lodash/noop";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
-import { ImageBackground, Text, View } from "react-native";
+import { ImageBackground, Platform, Text, Vibration, View } from "react-native";
 import { connect } from "react-redux";
 import { animated, Spring, Transition } from "react-spring/native";
 import { compose } from "redux";
@@ -65,7 +65,7 @@ export class CounterListItem extends Component {
   _onPanGestureEvent = ({ nativeEvent }) => {
     const deltaX = nativeEvent.translationX;
     if (!this.state.notified && Math.abs(deltaX) >= THRESHOLD) {
-      Haptic.selection();
+      Platform.OS === "android" ? Vibration.vibrate(100) : Haptic.selection();
       this.setState({ notified: true });
     }
     const cappedDeltaX = Math.min(THRESHOLD, Math.abs(deltaX)) * (deltaX < 0 ? -1 : 1);
