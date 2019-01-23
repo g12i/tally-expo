@@ -8,8 +8,9 @@ import { animated, Spring, Transition } from "react-spring/native";
 import { compose } from "redux";
 import { decrement, increment } from "../../reducers/transitions";
 import Icon from "../Icon";
-import Touchable from "../Touchable/index";
+import { Touchable } from "../Touchable";
 import styles from "./styles";
+import Touchable from "../Touchable/index";
 
 const { State, PanGestureHandler } = GestureHandler;
 const AnimatedView = animated(View);
@@ -124,40 +125,47 @@ export class CounterListItem extends Component {
     right: 0,
   });
 
+  wrapWithBackgroundImage = children => {
+    if (this.props.background && this.props.background.uri)
+      return (
+        <ImageBackground source={{ uri: this.props.background.uri }} style={styles.background}>
+          <View style={styles.backgroundMask} />
+          {children}
+        </ImageBackground>
+      );
+    else return children;
+  };
+
   renderContent = () => {
-    const { background, count, name, inEditMode } = this.props;
+    const { count, name, inEditMode } = this.props;
     return (
       <View style={styles.contentContainer}>
-        <View style={styles.backgroundMock} />
-        <ImageBackground source={{ uri: background.uri }} style={styles.background} />
-        <View style={styles.backgroundMask} />
-        <View style={styles.content}>
-          <Text style={styles.nameText}>{name}</Text>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              position: "relative",
-            }}
-          >
-            <Transition
-              items={inEditMode}
-              from={{ position: "absolute", opacity: 0, x: 50 }}
-              enter={{ opacity: 1, x: 0 }}
-              leave={{ opacity: 0, x: 50 }}
-              delay={this.props.index * 80}
-            >
-              {isInEditMode => ({ x, ...props }) => (
-                <AnimatedView style={[props, { transform: [{ translateX: x }] }]}>
-                  <Text style={styles.counterText}>
-                    {isInEditMode ? <Icon name="arrow-forward" size={22} /> : <Text>{count}</Text>}
-                  </Text>
-                </AnimatedView>
-              )}
-            </Transition>
+        {this.wrapWithBackgroundImage(
+          <View style={styles.content}>
+            <Text style={styles.nameText}>{name}</Text>
+            <View style={styles.counterContainer}>
+              <Transition
+                items={inEditMode}
+                from={{ position: "absolute", opacity: 0, x: 50 }}
+                enter={{ opacity: 1, x: 0 }}
+                leave={{ opacity: 0, x: 50 }}
+                delay={this.props.index * 120}
+              >
+                {isInEditMode => ({ x, ...props }) => (
+                  <AnimatedView style={[props, { transform: [{ translateX: x }] }]}>
+                    <Text style={styles.counterText}>
+                      {isInEditMode ? (
+                        <Icon name="arrow-forward" size={22} />
+                      ) : (
+                        <Text>{count}</Text>
+                      )}
+                    </Text>
+                  </AnimatedView>
+                )}
+              </Transition>
+            </View>
           </View>
-        </View>
+        )}
       </View>
     );
   };

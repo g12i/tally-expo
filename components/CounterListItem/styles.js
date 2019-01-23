@@ -7,17 +7,12 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     height: 85,
+    backgroundColor: "#232931",
   },
   background: {
     position: "absolute",
     width: "100%",
     height: "100%",
-  },
-  backgroundMock: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    backgroundColor: "#232931",
   },
   backgroundMask: {
     position: "absolute",
@@ -32,6 +27,12 @@ const styles = StyleSheet.create({
   counterText: {
     fontSize: 40,
     color: TEXT_COLOR,
+  },
+  counterContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    position: "relative",
   },
   content: {
     paddingLeft: 16,
