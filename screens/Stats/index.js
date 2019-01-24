@@ -14,7 +14,7 @@ import noop from "lodash/noop";
 import PropTypes from "prop-types";
 import React, { PureComponent } from "react";
 import { Dimensions, View } from "react-native";
-import { LineChart } from "react-native-chart-kit";
+import { LineChart, ContributionGraph } from "react-native-chart-kit";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Margin from "../../components/Margin/index";
@@ -109,7 +109,7 @@ class Stats extends PureComponent {
     aggregate: AGGREGATE_WEEKLY,
   };
 
-  transformData = compose(
+  transformForLineChart = compose(
     map(([x, y]) => ({ x, y })),
     toPairs,
     mapValues(values => values.reduce((acc, transition) => acc + transition.transition, 0)),
@@ -117,10 +117,17 @@ class Stats extends PureComponent {
     filter(({ date }) => getAggregationFilter(this.state.aggregate, new Date())(date))
   );
 
+  transformForContributionsChart = compose(
+    map(([date, count]) => ({ date, count })),
+    toPairs,
+    mapValues(values => values.reduce((acc, transition) => acc + transition.transition, 0)),
+    groupBy(({ date }) => format(date, "YYYY-MM-DD"))
+  );
+
   _setAggregate = by => () => this.setState({ aggregate: by });
 
   render() {
-    const chartData = this.transformData(this.props.transitions);
+    const chartData = this.transformForLineChart(this.props.transitions);
     return (
       <View style={styles.container}>
         <Margin bottom={2}>
@@ -138,19 +145,33 @@ class Stats extends PureComponent {
               },
             ],
           }}
-          width={Dimensions.get("window").width} // from react-native
+          width={Dimensions.get("window").width}
           height={220}
           chartConfig={{
             backgroundColor: BACKGROUND_COLOR,
             backgroundGradientFrom: BACKGROUND_COLOR,
             backgroundGradientTo: BACKGROUND_COLOR,
-            decimalPlaces: 2, // optional, defaults to 2dp
+            decimalPlaces: 0,
             color: () => BRAND_PRIMARY,
           }}
           bezier
           style={{
             marginVertical: 8,
-            borderRadius: 16,
+          }}
+        />
+
+        <ContributionGraph
+          values={this.transformForContributionsChart(this.props.transitions)}
+          endDate={new Date("2017-04-01")}
+          numDays={105}
+          width={Dimensions.get("window").width}
+          height={220}
+          chartConfig={{
+            backgroundColor: BACKGROUND_COLOR,
+            backgroundGradientFrom: BACKGROUND_COLOR,
+            backgroundGradientTo: BACKGROUND_COLOR,
+            decimalPlaces: 0,
+            color: (opacity = 1) => `rgba(78, 204, 163, ${opacity})`,
           }}
         />
       </View>
