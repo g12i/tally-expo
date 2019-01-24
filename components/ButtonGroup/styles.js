@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { BRAND_PRIMARY } from "../../theme";
+import { BRAND_PRIMARY, TEXT_COLOR } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {
@@ -30,6 +30,10 @@ const styles = StyleSheet.create({
   },
   active: {
     backgroundColor: BRAND_PRIMARY,
+  },
+  activeText: {
+    color: "#fff",
+    fontWeight: "400",
   },
 });
 

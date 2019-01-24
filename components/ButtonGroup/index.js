@@ -18,16 +18,19 @@ class ButtonGroup extends PureComponent {
     return (
       <View style={styles.container}>
         {React.Children.map(children, (child, i) => {
-          let buttonStyles = [styles.buttonWrapper];
+          let buttonWrapperStyles = [styles.buttonWrapper];
 
-          if (i === 0) buttonStyles.push(styles.first);
-          if (i === childLength - 1) buttonStyles.push(styles.last);
-          if (i === active) buttonStyles.push(styles.active);
+          if (i === 0) buttonWrapperStyles.push(styles.first);
+          if (i === childLength - 1) buttonWrapperStyles.push(styles.last);
+          if (i === active) buttonWrapperStyles.push(styles.active);
+
+          let textStyle = [styles.textStyles];
+          if (i === active) textStyle.push(styles.activeText);
 
           return (
-            <View key={`child-${i}`} style={buttonStyles}>
+            <View key={`child-${i}`} style={buttonWrapperStyles}>
               {React.cloneElement(child, {
-                textStyle: styles.textStyles,
+                textStyle,
                 buttonStyle: styles.buttonStyles,
               })}
             </View>
