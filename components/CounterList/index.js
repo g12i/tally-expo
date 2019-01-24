@@ -5,6 +5,7 @@ import { FlatList } from "react-native";
 import { connect } from "react-redux";
 import { removeCounter } from "../../reducers/counters";
 import { BACKGROUND_COLOR } from "../../theme";
+import collector from "../../utils/collector";
 import CounterListItem from "../CounterListItem";
 
 class CounterList extends PureComponent {
@@ -60,9 +61,10 @@ export default connect(
   state => ({
     counters: state.counters.map(counter => ({
       ...counter,
-      count: state.transitions
-        .filter(({ counterId }) => counterId === counter.id)
-        .reduce((acc, transition) => acc + transition.transition, 0),
+      count: collector(
+        state.transitions.filter(({ counterId }) => counterId === counter.id),
+        counter.reset
+      ),
     })),
   }),
   dispatch => ({
