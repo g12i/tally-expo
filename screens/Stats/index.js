@@ -14,9 +14,10 @@ import noop from "lodash/noop";
 import PropTypes from "prop-types";
 import React, { PureComponent } from "react";
 import { Dimensions, View } from "react-native";
-import { LineChart, ContributionGraph } from "react-native-chart-kit";
+import { ContributionGraph, LineChart } from "react-native-chart-kit";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import ButtonGroup from "../../components/ButtonGroup";
 import Margin from "../../components/Margin/index";
 import TextButton from "../../components/TextButton";
 import { removeCounter, updateCounter } from "../../reducers/counters";
@@ -126,15 +127,33 @@ class Stats extends PureComponent {
 
   _setAggregate = by => () => this.setState({ aggregate: by });
 
+  renderButtonGroup = () => {
+    const map = [
+      [AGGREGATE_DAILY, "D"],
+      [AGGREGATE_WEEKLY, "W"],
+      [AGGREGATE_MONTHLY, "M"],
+      [AGGREGATE_YEARLY, "Y"],
+    ];
+
+    return (
+      <ButtonGroup active={map.findIndex(([resolution]) => resolution === this.state.aggregate)}>
+        {map.map(([resolution, label]) => (
+          <TextButton
+            title={label}
+            onPress={this._setAggregate(resolution)}
+            key={`Resolution-${resolution}`}
+          />
+        ))}
+      </ButtonGroup>
+    );
+  };
+
   render() {
     const chartData = this.transformForLineChart(this.props.transitions);
     return (
       <View style={styles.container}>
-        <Margin bottom={2}>
-          <TextButton title="D" onPress={this._setAggregate(AGGREGATE_DAILY)} />
-          <TextButton title="W" onPress={this._setAggregate(AGGREGATE_WEEKLY)} />
-          <TextButton title="M" onPress={this._setAggregate(AGGREGATE_MONTHLY)} />
-          <TextButton title="Y" onPress={this._setAggregate(AGGREGATE_YEARLY)} />
+        <Margin bottom={2} top={1}>
+          {this.renderButtonGroup()}
         </Margin>
         <LineChart
           data={{
