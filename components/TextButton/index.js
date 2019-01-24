@@ -8,22 +8,35 @@ import styles from "./styles";
 
 class TextButton extends Component {
   static propTypes = {
-    color: PropTypes.string,
     accessibilityLabel: PropTypes.string,
-    onPress: PropTypes.func.isRequired,
-    title: PropTypes.string,
-    icon: PropTypes.string,
+    buttonStyle: PropTypes.object,
+    color: PropTypes.string,
     disabled: PropTypes.bool,
+    icon: PropTypes.string,
+    onPress: PropTypes.func.isRequired,
+    textStyle: PropTypes.object,
+    title: PropTypes.string,
   };
 
   static defaultProps = {
+    buttonStyle: {},
     disabled: false,
+    textStyle: {},
   };
 
   render() {
-    const { accessibilityLabel, color, onPress, title, icon, disabled } = this.props;
-    const buttonStyles = [styles.button];
-    const textStyles = [styles.text];
+    const {
+      accessibilityLabel,
+      color,
+      onPress,
+      title,
+      icon,
+      disabled,
+      buttonStyle,
+      textStyle,
+    } = this.props;
+    const buttonStyles = [styles.button, buttonStyle];
+    const textStyles = [styles.text, textStyle];
     const accessibilityStates = [];
     if (disabled) {
       buttonStyles.push(styles.buttonDisabled);
