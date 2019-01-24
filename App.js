@@ -9,6 +9,7 @@ import CreateNew from "./screens/CreateNew";
 import HomeScreen from "./screens/HomePage";
 import { BACKGROUND_COLOR, BORDER_COLOR, TEXT_COLOR } from "./theme";
 import Edit from "./screens/Edit";
+import Stats from "./screens/Stats";
 
 const CreateNewStack = createStackNavigator(
   {
@@ -66,6 +67,9 @@ const MainStack = createStackNavigator(
   {
     Home: {
       screen: HomeScreen,
+    },
+    Stats: {
+      screen: Stats,
     },
   },
   {
