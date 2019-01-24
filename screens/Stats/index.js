@@ -112,7 +112,7 @@ class Stats extends PureComponent {
             backgroundGradientFrom: BACKGROUND_COLOR,
             backgroundGradientTo: BACKGROUND_COLOR,
             decimalPlaces: 2, // optional, defaults to 2dp
-            color: BRAND_PRIMARY,
+            color: () => BRAND_PRIMARY,
           }}
           bezier
           style={{
