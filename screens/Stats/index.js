@@ -7,33 +7,14 @@ import toPairs from "lodash/fp/toPairs";
 import noop from "lodash/noop";
 import PropTypes from "prop-types";
 import React, { PureComponent } from "react";
-import { Dimensions, ImageBackground, Text, View } from "react-native";
+import { Dimensions, View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import FieldGroup from "../../components/FieldGroup";
-import Select from "../../components/Select";
 import TextButton from "../../components/TextButton";
-import TextInput from "../../components/TextInput";
-import {
-  removeCounter,
-  RESET_DAILY,
-  RESET_MONTHLY,
-  RESET_NEVER,
-  RESET_WEEKLY,
-  RESET_YEARLY,
-  updateCounter,
-} from "../../reducers/counters";
-import { BRAND_PRIMARY, BACKGROUND_COLOR } from "../../theme";
+import { removeCounter, updateCounter } from "../../reducers/counters";
+import { BACKGROUND_COLOR, BRAND_PRIMARY } from "../../theme";
 import styles from "./styles";
-
-const ResetLabels = {
-  [RESET_NEVER]: "Never",
-  [RESET_DAILY]: "Daily",
-  [RESET_WEEKLY]: "Weekly",
-  [RESET_MONTHLY]: "Monthly",
-  [RESET_YEARLY]: "Yearly",
-};
 
 class Stats extends PureComponent {
   static navigationOptions = ({ navigation }) => {
@@ -41,7 +22,7 @@ class Stats extends PureComponent {
       headerTitle: "Statistics",
       headerLeft: (
         <TextButton
-          onPress={() => navigation.navigate("Main")}
+          onPress={() => navigation.goBack()}
           icon="arrow-back"
           title="Back"
           color={BRAND_PRIMARY}

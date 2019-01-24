@@ -100,7 +100,6 @@ export class CounterListItem extends Component {
   };
 
   _onPressItem = () => {
-    if (!this.props.inEditMode) return;
     this.props.onPress(this.props.id);
   };
 

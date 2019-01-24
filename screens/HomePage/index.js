@@ -44,6 +44,10 @@ class HomeScreen extends PureComponent {
 
   state = {
     inEditMode: false,
+    lastTap: {
+      time: 0,
+      id: null,
+    },
   };
 
   componentDidMount() {
@@ -69,8 +73,25 @@ class HomeScreen extends PureComponent {
     this.props.navigation.navigate("Edit", { id });
   };
 
+  _navigateToStats = id => {
+    this.props.navigation.navigate("Stats", { id });
+  };
+
+  _onPressItem = id => {
+    if (this.state.inEditMode) {
+      return this._navigateToEdit(id);
+    }
+
+    const now = Number(new Date());
+    const { time: lastTapTime, id: lastTapId } = this.state.lastTap;
+    this.setState({ lastTap: { time: now, id } });
+    if (lastTapId === id && now - lastTapTime < 300) {
+      this._navigateToStats(id);
+    }
+  };
+
   render() {
-    return <CounterList inEditMode={this.state.inEditMode} onPressItem={this._navigateToEdit} />;
+    return <CounterList inEditMode={this.state.inEditMode} onPressItem={this._onPressItem} />;
   }
 }
 
