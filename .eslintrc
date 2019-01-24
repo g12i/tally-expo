@@ -3,7 +3,7 @@
   "env": {
     "browser": true
   },
-  "plugins": ["react"],
+  "plugins": ["react", "jest"],
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "rules": {},
   "settings": {
