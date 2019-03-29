@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { BRAND_PRIMARY, TEXT_COLOR } from "../../theme";
+import { BRAND_PRIMARY } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {
